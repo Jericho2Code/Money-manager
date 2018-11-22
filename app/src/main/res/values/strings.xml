@@ -1,8 +1,17 @@
 <resources>
     <string name="app_name">Менеджер трат</string>
     <string name="sum">Сумма</string>
-    <string name="description">Описание</string>
+    <string name="description">Примечание</string>
     <string name="add_transaction">Добавить операцию</string>
     <string name="save_changes">Сохранить изменения</string>
     <string name="last_transaction">Последние операции</string>
+    <string name="title">Описание</string>
+    <string name="transaction_saved">Операция сохранена</string>
+    <string name="spending">Расход</string>
+    <string name="profit">Доход</string>
+    <string name="search">Поиск</string>
+    <string name="settings">Настройки</string>
+    <string name="about">О приложении</string>
+    <string name="analytics">Аналитика</string>
+    <string name="categories">Категории</string>
 </resources>

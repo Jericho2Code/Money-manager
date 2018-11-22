@@ -33,6 +33,50 @@
             
             </android.support.design.widget.TextInputLayout>
             
+            <android.support.design.chip.ChipGroup
+                android:id="@+id/operation_type_group"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                app:singleSelection="true">
+                
+                <android.support.design.chip.Chip
+                    android:id="@+id/spending"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    app:checkedIconVisible="true"
+                    android:text="@string/spending"/>
+                
+                <android.support.design.chip.Chip
+                    android:id="@+id/profit"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:checkedIconVisible="true"
+                    android:text="@string/profit"/>
+            
+            </android.support.design.chip.ChipGroup>
+            
+            <android.support.design.widget.TextInputLayout
+                style="@style/Widget.Shrine.TextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="8dp"
+                android:hint="@string/title">
+                
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/transition_title_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"/>
+            
+            </android.support.design.widget.TextInputLayout>
+            
             <android.support.design.widget.TextInputLayout
                 style="@style/Widget.Shrine.TextInputLayout"
                 android:layout_width="match_parent"

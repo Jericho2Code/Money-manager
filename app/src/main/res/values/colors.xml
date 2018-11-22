@@ -7,6 +7,11 @@
     <color name="background_grey">#F5F5F5</color>
     <color name="icon_grey">#757575</color>
     
+    <color name="base_category_background">#F5F5F5</color>
+    
+    <color name="spending">#f44336</color>
+    <color name="profit">#4caf50</color>
+    
     <color name="list_item_secondary">#99000000</color>
     <color name="list_item_primary">#de000000</color>
     

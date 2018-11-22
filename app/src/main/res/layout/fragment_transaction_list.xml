@@ -3,22 +3,16 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
     
-    <LinearLayout
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/transition_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
-        
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/transition_list"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-            tools:listitem="@layout/list_item_transaction"/>
-        
-    </LinearLayout>
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+        tools:listitem="@layout/list_item_transaction"/>
     
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -39,13 +33,14 @@
     
     <android.support.design.bottomappbar.BottomAppBar
         android:id="@+id/bottom_bar"
-        style="@style/Widget.MaterialComponents.BottomAppBar"
+        style="@style/Widget.MaterialComponents.BottomAppBar.Colored"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:backgroundTint="@color/colorPrimary"
-        app:hideOnScroll="true"
         android:elevation="16dp"
+        app:hideOnScroll="true"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         app:layout_scrollFlags="scroll|enterAlways"
         app:navigationIcon="@drawable/ic_menu"/>
     

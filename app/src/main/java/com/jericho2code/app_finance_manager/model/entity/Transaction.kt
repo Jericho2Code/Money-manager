@@ -10,8 +10,10 @@ class Transaction(
     @PrimaryKey(autoGenerate = true)
     var id: Long? = null,
     var title: String = "",
-    var sum: Double = 0.0,
-    var date: LocalDate? = null
+    var description: String = "",
+    var value: Double = 0.0,
+    var date: LocalDate? = null,
+    var transactionType: TransactionType? = null
 ) {
     companion object {
         const val TRANSACTION_TABLE = "transaction_table"
