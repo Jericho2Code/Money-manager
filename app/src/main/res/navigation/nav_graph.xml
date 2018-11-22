@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/nav_graph"
+            app:startDestination="@id/transactionListFragment">
+    
+    <fragment android:id="@+id/transactionListFragment"
+              android:name="com.jericho2code.app_finance_manager.screens.transaction_list.TransactionListFragment"
+              android:label="TransactionListFragment"
+              tools:layout="@layout/fragment_transaction_list">
+        <action android:id="@+id/action_transactionListFragment_to_addEditTransactionFragment2"
+                app:destination="@id/addEditTransactionFragment"    app:enterAnim="@anim/slide_to_top" app:popExitAnim="@anim/slide_to_bottom"/>
+    </fragment>
+    <fragment android:id="@+id/addEditTransactionFragment"
+              android:name="com.jericho2code.app_finance_manager.screens.add_edit_transaction.AddEditTransactionFragment"
+              android:label="AddEditTransactionFragment"
+              tools:layout="@layout/fragment_add_edit_transaction"/>
+</navigation>

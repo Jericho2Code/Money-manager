@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/Layout.ListItem"
+    android:orientation="horizontal">
+    
+    <View
+        android:id="@+id/transaction_item_image_background"
+        style="@style/Layout.ListItem.Image"
+        android:background="@drawable/mock_transaction_icon"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+    
+    <ImageView
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/ic_food"
+        app:layout_constraintBottom_toBottomOf="@+id/transaction_item_image_background"
+        app:layout_constraintStart_toStartOf="@+id/transaction_item_image_background"
+        app:layout_constraintTop_toTopOf="@+id/transaction_item_image_background"
+        app:layout_constraintEnd_toEndOf="@+id/transaction_item_image_background"/>
+    
+    <TextView
+        android:id="@+id/transaction_item_title_text"
+        style="@style/Text.ListItem.Primary.OneLine"
+        android:text="Описание (Заголовок)"
+        android:layout_width="0dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintStart_toEndOf="@+id/transaction_item_image_background"
+        app:layout_constraintEnd_toStartOf="@+id/transaction_item_value_text"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintBottom_toTopOf="@+id/transaction_item_description_text"/>
+    
+    <TextView
+        android:id="@+id/transaction_item_description_text"
+        style="@style/Text.ListItem.Secondary.TwoLine"
+        android:layout_width="0dp"
+        android:text="Пояснение на несколько строчек текста и еще чуть чуть текста чтобы точно было 3 строки"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintEnd_toStartOf="@+id/transaction_item_value_text"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/transaction_item_image_background"
+        app:layout_constraintTop_toBottomOf="@+id/transaction_item_title_text"
+        app:layout_constraintHorizontal_bias="0.5"/>
+    
+    <TextView
+        android:id="@+id/transaction_item_value_text"
+        style="@style/Text.ListItem"
+        android:text="-1700,0"
+        android:paddingStart="12dp"
+        android:paddingEnd="0dp"
+        android:textColor="#ff0000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+</android.support.constraint.ConstraintLayout>

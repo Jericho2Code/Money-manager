@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <!--just for naming-->
+    <style name="Text.ListItem"/>
+    
+    <style name="Text.ListItem.Primary">
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textColor">@color/list_item_primary</item>
+    </style>
+    
+    <style name="Text.ListItem.Primary.OneLine">
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+    
+    <style name="Text.ListItem.Secondary">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/list_item_secondary</item>
+    </style>
+    
+    <style name="Text.ListItem.Secondary.TwoLine">
+        <item name="android:maxLines">2</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+    
+    <style name="Layout.ListItem" parent="">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">88dp</item>
+        <item name="android:padding">16dp</item>
+    </style>
+    
+    <style name="Layout.ListItem.Image" parent="">
+        <item name="android:layout_width">40dp</item>
+        <item name="android:layout_height">40dp</item>
+    </style>
+
+</resources>
