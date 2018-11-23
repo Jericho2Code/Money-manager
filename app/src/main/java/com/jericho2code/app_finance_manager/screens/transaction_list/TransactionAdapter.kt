@@ -1,19 +1,23 @@
 package com.jericho2code.app_finance_manager.screens.transaction_list
 
+import android.annotation.SuppressLint
+import android.graphics.drawable.GradientDrawable
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import com.jericho2code.app_finance_manager.R
 import com.jericho2code.app_finance_manager.application.extensions.color
+import com.jericho2code.app_finance_manager.application.extensions.drawable
 import com.jericho2code.app_finance_manager.application.extensions.setTextOrHideIfEmpty
-import com.jericho2code.app_finance_manager.model.entity.Transaction
 import com.jericho2code.app_finance_manager.model.entity.TransactionType
+import com.jericho2code.app_finance_manager.model.entity.TransactionWithCategory
 
 class TransactionAdapter : RecyclerView.Adapter<TransactionAdapter.Holder>() {
 
-    var items: List<Transaction> = emptyList()
+    var items: List<TransactionWithCategory> = emptyList()
         set(value) {
             field = value
             notifyDataSetChanged()
@@ -40,19 +44,34 @@ class TransactionAdapter : RecyclerView.Adapter<TransactionAdapter.Holder>() {
         private val title = itemView.findViewById<TextView>(R.id.transaction_item_title_text)
         private val description = itemView.findViewById<TextView>(R.id.transaction_item_description_text)
         private val value = itemView.findViewById<TextView>(R.id.transaction_item_value_text)
+        private val imageBackground = itemView.findViewById<View>(R.id.transaction_item_image_background)
+        private val categoryIcon = itemView.findViewById<ImageView>(R.id.transaction_item_image_category)
 
-        fun bind(item: Transaction) {
-            title.text = item.title
-            description.setTextOrHideIfEmpty(item.description)
-            val sign = when (item.transactionType) {
+        @SuppressLint("ResourceAsColor")
+        fun bind(item: TransactionWithCategory) {
+            val transaction = item.transaction!!
+            val category = item.category.firstOrNull()
+
+            title.text = transaction.title
+            description.setTextOrHideIfEmpty(transaction.description)
+            val sign = when (transaction.transactionType) {
                 TransactionType.SPENDING_TRANSACTION -> "-"
                 TransactionType.PROFIT_TRANSACTION -> "+"
                 else -> ""
             }
-            value.text = sign + item.value.toString()
+
+            category?.let { category ->
+                imageBackground.background = GradientDrawable().apply {
+                    shape = GradientDrawable.OVAL
+                    setColor(category.color)
+                }
+                categoryIcon.setImageDrawable(itemView.context.drawable(category.iconId))
+            }
+
+            value.text = sign + transaction.value.toString()
             value.setTextColor(
                 itemView.context.color(
-                    when (item.transactionType) {
+                    when (transaction.transactionType) {
                         TransactionType.SPENDING_TRANSACTION -> R.color.spending
                         TransactionType.PROFIT_TRANSACTION -> R.color.profit
                         TransactionType.TRANSFER_TRANSACTION -> R.color.transfer

@@ -2,11 +2,14 @@ package com.jericho2code.app_finance_manager.application.extensions
 
 import android.content.Context
 import android.content.res.Resources
+import android.graphics.drawable.Drawable
 import android.support.annotation.ArrayRes
 import android.support.annotation.ColorRes
+import android.support.annotation.DrawableRes
 import android.support.annotation.StringRes
 import android.support.design.widget.Snackbar
 import android.support.v4.content.ContextCompat
+import android.support.v7.content.res.AppCompatResources
 import android.util.TypedValue
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -121,3 +124,27 @@ fun View.invisible() {
  * @param colorId id цвета
  */
 fun Context.color(@ColorRes colorId: Int) = ContextCompat.getColor(this, colorId)
+
+/**
+ * Функция возвращает объект [Drawable] по его id
+ *
+ * @param drawableId id изображения
+ * @param tintColor цвет заливки (для векторов) по умолчанию равен Null,
+ * если равен null то не применяется
+ */
+fun Context.drawable(@DrawableRes drawableId: Int, tintColor: Int? = null): Drawable {
+    val drawable = AppCompatResources.getDrawable(this, drawableId)!!
+    tintColor?.let {
+        drawable.setColorFilter(tintColor, android.graphics.PorterDuff.Mode.SRC_IN)
+    }
+    return drawable
+}
+
+/**
+ *  Возвращает строку по ей Id
+ */
+fun Context.str(
+    @StringRes
+    resId: Int,
+    vararg formatArgs: Any
+): String = if (formatArgs.isNotEmpty()) getString(resId, *formatArgs) else getString(resId)

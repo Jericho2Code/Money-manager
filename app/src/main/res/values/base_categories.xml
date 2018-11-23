@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="category_title_food">Еда</string>
+    <string name="category_title_passage">Проезд на транспорте</string>
+    <string name="category_title_rent">Аренда жилья</string>
+</resources>

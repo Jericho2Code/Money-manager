@@ -5,12 +5,17 @@ import android.arch.persistence.room.Query
 import com.jericho2code.app_finance_manager.model.entity.Transaction
 import com.jericho2code.app_finance_manager.model.entity.Transaction.Companion.ID
 import com.jericho2code.app_finance_manager.model.entity.Transaction.Companion.TRANSACTION_TABLE
+import com.jericho2code.app_finance_manager.model.entity.TransactionWithCategory
 import io.reactivex.Single
 
 @Dao
 interface TransactionDao : BaseDao<Transaction> {
     @Query("SELECT * FROM $TRANSACTION_TABLE")
-    fun transaction(): Single<List<Transaction>>
+    fun transactions(): Single<List<Transaction>>
+
+    @android.arch.persistence.room.Transaction
+    @Query("SELECT * FROM $TRANSACTION_TABLE")
+    fun transactionsWithCategory(): Single<List<TransactionWithCategory>>
 
     @Query("SELECT * FROM $TRANSACTION_TABLE WHERE $ID = :id")
     fun transactionById(id: Long): Single<Transaction>

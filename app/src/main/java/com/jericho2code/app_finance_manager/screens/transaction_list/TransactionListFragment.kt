@@ -49,7 +49,7 @@ class TransactionListFragment : Fragment() {
             bottomNavDrawerFragment.show(childFragmentManager, bottomNavDrawerFragment.tag)
         }
 
-        transactionRepository.transactions().subscribe(
+        transactionRepository.transactionsWithCategories().subscribe(
             {
                 adapter.items = it
             }, {}

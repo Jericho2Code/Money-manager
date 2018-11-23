@@ -5,6 +5,7 @@ import android.arch.persistence.room.RoomDatabase
 import android.arch.persistence.room.TypeConverters
 import com.jericho2code.app_finance_manager.model.database.converters.LocalDateConverter
 import com.jericho2code.app_finance_manager.model.database.converters.TransactionTypeConverter
+import com.jericho2code.app_finance_manager.model.database.dao.CategoryDao
 import com.jericho2code.app_finance_manager.model.database.dao.TransactionDao
 import com.jericho2code.app_finance_manager.model.entity.Category
 import com.jericho2code.app_finance_manager.model.entity.Transaction
@@ -20,6 +21,7 @@ import com.jericho2code.app_finance_manager.model.entity.Transaction
 @TypeConverters(LocalDateConverter::class, TransactionTypeConverter::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun transactionDao(): TransactionDao
+    abstract fun categorynDao(): CategoryDao
 
     companion object {
         const val DATABASE_NAME = "app-finance-manager-database.db"
