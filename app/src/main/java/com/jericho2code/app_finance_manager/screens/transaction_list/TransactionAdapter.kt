@@ -55,6 +55,7 @@ class TransactionAdapter : RecyclerView.Adapter<TransactionAdapter.Holder>() {
                     when (item.transactionType) {
                         TransactionType.SPENDING_TRANSACTION -> R.color.spending
                         TransactionType.PROFIT_TRANSACTION -> R.color.profit
+                        TransactionType.TRANSFER_TRANSACTION -> R.color.transfer
                         else -> R.color.list_item_primary
                     }
                 )

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
                                                  xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                 xmlns:tools="http://schemas.android.com/tools"
                                                  android:layout_width="match_parent"
                                                  android:layout_height="match_parent"
                                                  android:background="@color/background">
@@ -29,7 +30,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="numberDecimal"
-                    android:maxLines="1"/>
+                    android:maxLines="1"
+                    tools:text="250"/>
             
             </android.support.design.widget.TextInputLayout>
             
@@ -47,7 +49,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:checked="true"
-                    app:checkedIconVisible="true"
+                    app:chipBackgroundColor="@color/chip_spent_background_color_selector"
                     android:text="@string/spending"/>
                 
                 <android.support.design.chip.Chip
@@ -55,8 +57,16 @@
                     style="@style/Widget.MaterialComponents.Chip.Choice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:checkedIconVisible="true"
+                    app:chipBackgroundColor="@color/chip_profit_background_color_selector"
                     android:text="@string/profit"/>
+    
+                <android.support.design.chip.Chip
+                    android:id="@+id/transfer"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:chipBackgroundColor="@color/chip_transfer_background_color_selector"
+                    android:text="@string/transfer"/>
             
             </android.support.design.chip.ChipGroup>
             
@@ -73,7 +83,8 @@
                     android:id="@+id/transition_title_input"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="text"/>
+                    android:inputType="text"
+                    tools:text="Билет в кино"/>
             
             </android.support.design.widget.TextInputLayout>
             
@@ -90,7 +101,8 @@
                     android:id="@+id/transition_description_input"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="text"/>
+                    android:inputType="text"
+                    tools:text="В к-р Большой, на Мстители: Война бесконечности"/>
             
             </android.support.design.widget.TextInputLayout>
         

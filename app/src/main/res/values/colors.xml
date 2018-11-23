@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#546e7a</color>
-    <color name="colorPrimaryDark">#29434e</color>
-    <color name="colorAccent">#d50000</color>
+    <color name="colorPrimary">#689f38</color>
+    <color name="colorPrimaryDark">#387002</color>
+    <color name="colorPrimaryLight">#99d066</color>
+    <color name="colorAccent">#FFFF9800</color>
     <color name="background">#ffffff</color>
     <color name="background_grey">#F5F5F5</color>
     <color name="icon_grey">#757575</color>
@@ -10,7 +11,18 @@
     <color name="base_category_background">#F5F5F5</color>
     
     <color name="spending">#f44336</color>
+    <color name="spending_light">#ff7961</color>
+    <color name="spending_dark">#ba000d</color>
+    <color name="spending_text">#000000</color>
+    
     <color name="profit">#4caf50</color>
+    <color name="profit_light">#80e27e</color>
+    <color name="profit_dark">#087f23</color>
+    <color name="transfer">#ffeb3b</color>
+    <color name="transfer_light">#ffff72</color>
+    <color name="transfer_dark">#c8b900</color>
+    
+    <color name="chip_unselected">#EEEEEE</color>
     
     <color name="list_item_secondary">#99000000</color>
     <color name="list_item_primary">#de000000</color>

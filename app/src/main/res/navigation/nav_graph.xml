@@ -10,10 +10,13 @@
               android:label="TransactionListFragment"
               tools:layout="@layout/fragment_transaction_list">
         <action android:id="@+id/action_transactionListFragment_to_addEditTransactionFragment2"
-                app:destination="@id/addEditTransactionFragment"    app:enterAnim="@anim/slide_to_top" app:popExitAnim="@anim/slide_to_bottom"/>
+                app:destination="@id/addEditTransactionFragment"
+                app:enterAnim="@anim/slide_to_top"
+                app:popExitAnim="@anim/slide_to_bottom"/>
     </fragment>
     <fragment android:id="@+id/addEditTransactionFragment"
               android:name="com.jericho2code.app_finance_manager.screens.add_edit_transaction.AddEditTransactionFragment"
               android:label="AddEditTransactionFragment"
               tools:layout="@layout/fragment_add_edit_transaction"/>
+
 </navigation>

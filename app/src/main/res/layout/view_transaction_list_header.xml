@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="8dp">
+    
+    <android.support.design.card.MaterialCardView
+        style="@style/Layout.CardView"
+        android:id="@+id/total_balance_card"
+        android:layout_width="0dp"
+        android:elevation="16dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp">
+        
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp">
+            
+            <TextView
+                style="@style/Text.ListItem.Secondary"
+                android:id="@+id/total_balance_title"
+                android:text="@string/total_balance"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"/>
+            
+            <TextView
+                style="@style/Text.ListItem.Primary.OneLine"
+                android:id="@+id/total_balance_value"
+                android:text="185,750.00 ₽"
+                android:layout_width="0dp"
+                android:textSize="24sp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/total_balance_title"
+                app:layout_constraintEnd_toEndOf="parent"/>
+        
+        
+        </android.support.constraint.ConstraintLayout>
+    
+    </android.support.design.card.MaterialCardView>
+    
+    <android.support.design.card.MaterialCardView
+        style="@style/Layout.CardView"
+        android:layout_width="0dp"
+        android:elevation="16dp"
+        app:layout_constraintTop_toBottomOf="@+id/total_balance_card"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_center_vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginBottom="8dp">
+        
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp">
+            
+            <TextView
+                android:id="@+id/total_profit_for_last_month_title"
+                android:text="@string/total_profit_for_last_month"
+                style="@style/Text.ListItem.Secondary"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"/>
+            <TextView
+                style="@style/Text.ListItem.Primary.OneLine"
+                android:id="@+id/total_profit_for_last_month_value"
+                android:text="+50,750.00 ₽"
+                android:layout_width="0dp"
+                android:textSize="16sp"
+                android:textColor="@color/profit"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/total_profit_for_last_month_title"
+                app:layout_constraintEnd_toEndOf="parent"/>
+        
+        
+        </android.support.constraint.ConstraintLayout>
+    
+    </android.support.design.card.MaterialCardView>
+    
+    <android.support.design.card.MaterialCardView
+        style="@style/Layout.CardView"
+        android:layout_width="0dp"
+        android:elevation="16dp"
+        app:layout_constraintTop_toBottomOf="@+id/total_balance_card"
+        app:layout_constraintStart_toEndOf="@+id/guideline_center_vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp">
+        
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp">
+            
+            <TextView
+                style="@style/Text.ListItem.Secondary"
+                android:id="@+id/total_spent_for_last_month_title"
+                android:text="@string/total_spent_for_last_month"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"/>
+            <TextView
+                style="@style/Text.ListItem.Primary.OneLine"
+                android:id="@+id/total_spent_for_last_month_value"
+                android:text="-35,452.00 ₽"
+                android:layout_width="0dp"
+                android:textSize="16sp"
+                android:textColor="@color/spending"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/total_spent_for_last_month_title"
+                app:layout_constraintEnd_toEndOf="parent"/>
+        
+        
+        </android.support.constraint.ConstraintLayout>
+    
+    </android.support.design.card.MaterialCardView>
+    
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline_center_vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5"/>
+
+</android.support.constraint.ConstraintLayout>

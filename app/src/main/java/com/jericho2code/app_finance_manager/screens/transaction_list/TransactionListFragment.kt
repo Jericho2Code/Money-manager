@@ -39,7 +39,9 @@ class TransactionListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         transition_list.addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.VERTICAL))
         transition_list.adapter = adapter
-        add_transaction_fab.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_transactionListFragment_to_addEditTransactionFragment2))
+        add_transaction_fab.setOnClickListener(
+            Navigation.createNavigateOnClickListener(R.id.action_transactionListFragment_to_addEditTransactionFragment2)
+        )
 
         bottom_bar.inflateMenu(R.menu.main_menu)
         bottom_bar.setNavigationOnClickListener {
