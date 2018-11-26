@@ -7,7 +7,9 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import com.jericho2code.app_finance_manager.R
+import com.jericho2code.app_finance_manager.application.extensions.color
 import com.jericho2code.app_finance_manager.application.extensions.drawable
+import com.jericho2code.app_finance_manager.application.extensions.drawableIdByName
 import com.jericho2code.app_finance_manager.model.entity.Category
 import ru.kinoplan24.app.presentation.utils.adapters.SimpleListAdapter
 
@@ -17,7 +19,7 @@ class CategoryAdapter : SimpleListAdapter<Category, CategoryAdapter.Holder>(
     }
 ) {
 
-    var onItemClickListener: ((categoryId: Long) -> Unit)? = null
+    var onItemClickListener: ((category: Category) -> Unit)? = null
 
     override fun onBindViewHolder(holder: Holder, item: Category, position: Int) {
         holder.bind(item, onItemClickListener)
@@ -31,16 +33,17 @@ class CategoryAdapter : SimpleListAdapter<Category, CategoryAdapter.Holder>(
         private val categoryIcon = itemView.findViewById<ImageView>(R.id.category_item_image)
 
         @SuppressLint("ResourceAsColor")
-        fun bind(item: Category, onItemClickListener: ((categoryId: Long) -> Unit)?) {
+        fun bind(item: Category, onItemClickListener: ((category: Category) -> Unit)?) {
+            val context = itemView.context
             title.text = item.title
             imageBackground.background = GradientDrawable().apply {
                 shape = GradientDrawable.OVAL
-                setColor(item.color)
+                setColor(item.backgroundColor)
             }
             onItemClickListener?.let { onItemClick ->
-                itemView.setOnClickListener { onItemClick.invoke(item.id!!) }
+                itemView.setOnClickListener { onItemClick(item) }
             }
-            categoryIcon.setImageDrawable(itemView.context.drawable(item.iconId))
+            categoryIcon.setImageDrawable(context.drawable(item.iconIdName?.let { context.drawableIdByName(it) } ?: R.drawable.ic_money, item.iconColor ?: context?.color(R.color.icon_white)!!))
         }
     }
 }

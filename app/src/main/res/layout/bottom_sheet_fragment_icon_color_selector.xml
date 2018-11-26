@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+    
+    <View
+        android:layout_width="32dp"
+        android:layout_height="4dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/dialog_bottom_sheet_header_tick"/>
+    
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        
+        <TextView
+            android:id="@+id/color_selector_header_text"
+            style="@style/Text.ListItem.Primary.OneLine"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:text="@string/select_icon_color"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"/>
+        
+        <android.support.design.chip.ChipGroup
+            android:id="@+id/color_select_group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/color_selector_header_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="16dp"
+            app:singleLine="true"
+            app:singleSelection="true">
+            
+            <android.support.design.chip.Chip
+                android:id="@+id/color_light"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:text="@string/light"
+                app:checkedIconVisible="true"
+                android:checked="true"
+                android:backgroundTint="@color/background_grey"
+                app:checkedIcon="@drawable/ic_check"
+                android:textColor="@color/icon_grey"
+                android:layout_height="wrap_content"/>
+            
+            <android.support.design.chip.Chip
+                android:id="@+id/color_dark"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:text="@string/dark"
+                app:checkedIcon="@drawable/ic_check_white"
+                android:backgroundTint="@color/icon_grey"
+                app:checkedIconVisible="true"
+                android:textColor="@color/icon_white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        
+        </android.support.design.chip.ChipGroup>
+        
+        <android.support.design.button.MaterialButton
+            android:id="@+id/select_color_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/save"
+            android:layout_marginTop="16dp"
+            android:backgroundTint="@color/colorAccent"
+            app:layout_constraintTop_toBottomOf="@+id/color_select_group"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="16dp" android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+    
+    </android.support.constraint.ConstraintLayout>
+
+</LinearLayout>

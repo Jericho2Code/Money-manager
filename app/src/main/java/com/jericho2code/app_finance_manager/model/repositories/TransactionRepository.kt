@@ -1,5 +1,6 @@
 package com.jericho2code.app_finance_manager.model.repositories
 
+import android.arch.lifecycle.LiveData
 import com.jericho2code.app_finance_manager.model.database.dao.TransactionDao
 import com.jericho2code.app_finance_manager.model.entity.Transaction
 import com.jericho2code.app_finance_manager.model.entity.TransactionWithCategory
@@ -13,13 +14,9 @@ class TransactionRepository @Inject constructor(
     private val ioScheduler: Scheduler
 ) {
 
-    fun transactions(): Single<List<Transaction>> = transactionDao.transactions()
-        .subscribeOn(ioScheduler)
-        .observeOn(uiScheduler)
+    fun transactions(): LiveData<List<Transaction>> = transactionDao.transactions()
 
-    fun transactionsWithCategories(): Single<List<TransactionWithCategory>> = transactionDao.transactionsWithCategory()
-        .subscribeOn(ioScheduler)
-        .observeOn(uiScheduler)
+    fun transactionsWithCategories(): LiveData<List<TransactionWithCategory>> = transactionDao.transactionsWithCategory()
 
     fun saveTransaction(transaction: Transaction): Single<Unit> = Single.fromCallable { transactionDao.insert(transaction) }
         .subscribeOn(ioScheduler)

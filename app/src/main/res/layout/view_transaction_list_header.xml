@@ -2,6 +2,7 @@
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="8dp">
@@ -33,7 +34,7 @@
             <TextView
                 style="@style/Text.ListItem.Primary.OneLine"
                 android:id="@+id/total_balance_value"
-                android:text="185,750.00 ₽"
+                tools:text="185,750.00 ₽"
                 android:layout_width="0dp"
                 android:textSize="24sp"
                 android:layout_marginTop="8dp"
@@ -74,7 +75,7 @@
             <TextView
                 style="@style/Text.ListItem.Primary.OneLine"
                 android:id="@+id/total_profit_for_last_month_value"
-                android:text="+50,750.00 ₽"
+                tools:text="+50,750.00 ₽"
                 android:layout_width="0dp"
                 android:textSize="16sp"
                 android:textColor="@color/profit"
@@ -116,7 +117,7 @@
             <TextView
                 style="@style/Text.ListItem.Primary.OneLine"
                 android:id="@+id/total_spent_for_last_month_value"
-                android:text="-35,452.00 ₽"
+                tools:text="-35,452.00 ₽"
                 android:layout_width="0dp"
                 android:textSize="16sp"
                 android:textColor="@color/spending"

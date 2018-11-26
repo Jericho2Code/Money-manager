@@ -8,14 +8,49 @@
             <LayoutPositions>
               <option name="myPositions">
                 <map>
+                  <entry key="addEditCategoryFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="565" />
+                            <option name="y" value="88" />
+                          </Point>
+                        </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="action_addEditCategoryFragment_to_categoryBackgroundColorSelectorBottomDialogFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                            <entry key="action_addEditCategoryFragment_to_categoryIconSelectorFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
                   <entry key="addEditTransactionFragment">
                     <value>
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="240" />
-                            <option name="y" value="-58" />
+                            <option name="x" value="230" />
+                            <option name="y" value="-408" />
                           </Point>
+                        </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="action_addEditTransactionFragment_to_selectCategoryFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
                         </option>
                       </LayoutPositions>
                     </value>
@@ -25,8 +60,8 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="-71" />
-                            <option name="y" value="312" />
+                            <option name="x" value="-192" />
+                            <option name="y" value="88" />
                           </Point>
                         </option>
                         <option name="myPositions">
@@ -41,14 +76,68 @@
                       </LayoutPositions>
                     </value>
                   </entry>
+                  <entry key="categoryBackgroundColorSelectorBottomDialogFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="795" />
+                            <option name="y" value="434" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="categoryIconColorSelectorBottomDialogFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="1184" />
+                            <option name="y" value="-60" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="categoryIconSelectorFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="894" />
+                            <option name="y" value="-58" />
+                          </Point>
+                        </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="action_categoryIconSelectorFragment_to_categoryIconColorSelectorBottomDialogFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
                   <entry key="categoryListFragment">
                     <value>
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="221" />
-                            <option name="y" value="319" />
+                            <option name="x" value="200" />
+                            <option name="y" value="80" />
                           </Point>
+                        </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="action_categoryListFragment_to_addEditCategoryFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
                         </option>
                       </LayoutPositions>
                     </value>
@@ -58,9 +147,18 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="527" />
-                            <option name="y" value="-65" />
+                            <option name="x" value="509" />
+                            <option name="y" value="-409" />
                           </Point>
+                        </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="action_selectCategoryFragment_to_addEditCategoryFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
                         </option>
                       </LayoutPositions>
                     </value>
@@ -70,8 +168,8 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="-201" />
-                            <option name="y" value="-68" />
+                            <option name="x" value="-404" />
+                            <option name="y" value="-409" />
                           </Point>
                         </option>
                         <option name="myPositions">

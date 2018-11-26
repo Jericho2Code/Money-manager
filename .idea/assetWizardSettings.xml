@@ -13,8 +13,9 @@
                       <PersistentState>
                         <option name="values">
                           <map>
-                            <entry key="outputName" value="ic_android_black_24dp" />
-                            <entry key="sourceFile" value="C:\Users\Mikhail" />
+                            <entry key="assetSourceType" value="FILE" />
+                            <entry key="outputName" value="ic_work" />
+                            <entry key="sourceFile" value="C:\Users\Mikhail\Desktop\category_icons\round-work-24px.svg" />
                           </map>
                         </option>
                       </PersistentState>

@@ -15,6 +15,7 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import android.widget.Toast
+import com.jericho2code.app_finance_manager.R
 
 /**
  * Принудительно показывает клавиатуру
@@ -148,3 +149,20 @@ fun Context.str(
     resId: Int,
     vararg formatArgs: Any
 ): String = if (formatArgs.isNotEmpty()) getString(resId, *formatArgs) else getString(resId)
+
+fun Context.drawableIdByName(name: String) = resources.getIdentifier(name, "drawable", packageName)
+fun Context.nameForId(@DrawableRes resId: Int): String = resources.getResourceEntryName(resId)
+
+/**
+ * Функция возвращает список цветов по его id
+ *
+ * @param colorArrayId id списка цветов
+ */
+fun Context.getIdsFromTypedArray(@ArrayRes colorArrayId: Int): List<Int> {
+    var result: List<Int> = emptyList()
+    this.resources?.obtainTypedArray(colorArrayId)?.apply {
+        result = (0 until length()).map { getResourceId(it, R.drawable.ic_money) }
+        recycle()
+    }
+    return result
+}

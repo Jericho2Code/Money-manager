@@ -9,7 +9,7 @@
     <View
         android:id="@+id/transaction_item_image_background"
         style="@style/Layout.ListItem.Image"
-        android:background="@drawable/mock_transaction_icon"
+        android:background="@drawable/ic_round_grey"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"/>
     

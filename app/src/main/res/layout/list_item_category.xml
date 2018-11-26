@@ -7,7 +7,7 @@
     <View
         android:id="@+id/category_item_image_background"
         style="@style/Layout.ListItem.Image"
-        android:background="@drawable/mock_transaction_icon"
+        android:background="@drawable/ic_round_grey"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>
@@ -30,7 +30,8 @@
         android:layout_marginStart="16dp"
         app:layout_constraintStart_toEndOf="@+id/category_item_image_background"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="8dp"/>
 
 
 </android.support.constraint.ConstraintLayout>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                             xmlns:app="http://schemas.android.com/apk/res-auto"
+                                             style="@style/Layout.ListItem">
+    
+    <TextView
+        android:id="@+id/category_color_title_text"
+        android:text="@string/category_color"
+        style="@style/Text.ListItem.Primary.OneLine"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+    
+    <TextView
+        android:id="@+id/category_color_subtitle_text"
+        android:text="@string/category_color_subtitle_text"
+        style="@style/Text.ListItem.Secondary"
+        app:layout_constraintTop_toBottomOf="@+id/category_color_title_text"
+        app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toStartOf="@+id/color_view"
+        android:layout_marginEnd="8dp" app:layout_constraintHorizontal_bias="0.0"/>
+    
+    <View
+        android:id="@+id/color_view"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:background="@drawable/ic_round_grey"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+</android.support.constraint.ConstraintLayout>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                 xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                 xmlns:tools="http://schemas.android.com/tools"
+                                                 android:layout_width="match_parent"
+                                                 android:layout_height="match_parent">
+    
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/icon_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/background"
+        app:layoutManager="android.support.v7.widget.GridLayoutManager"
+        app:spanCount="4"
+        tools:listitem="@layout/list_item_icon_selector"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+    
+    <include layout="@layout/view_toolbar"/>
+
+</android.support.design.widget.CoordinatorLayout>

@@ -29,6 +29,7 @@ android {
 
 dependencies {
     def room_version = "1.1.1"
+    def lifecycle_version = "1.1.1"
     def support_version = "28.0.0"
     def dagger_version = "2.11"
 
@@ -43,12 +44,14 @@ dependencies {
     implementation 'android.arch.navigation:navigation-ui-ktx:1.0.0-alpha07'
     implementation "android.arch.persistence.room:runtime:$room_version"
     implementation "android.arch.persistence.room:rxjava2:$room_version"
+    implementation "android.arch.lifecycle:extensions:$lifecycle_version"
     implementation "io.reactivex.rxjava2:rxandroid:2.0.2"
     implementation "io.reactivex.rxjava2:rxjava:2.2.0"
     implementation "io.reactivex.rxjava2:rxkotlin:2.2.0"
     implementation "com.jakewharton.threetenabp:threetenabp:1.0.5"
     implementation "com.google.dagger:dagger:$dagger_version"
     implementation "com.google.code.gson:gson:2.8.2"
+    implementation 'com.github.rtugeek:colorseekbar:1.7.3'
 
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0-alpha' //maybe delete
 
@@ -58,4 +61,5 @@ dependencies {
 
     kapt "android.arch.persistence.room:compiler:$room_version"
     kapt "com.google.dagger:dagger-compiler:$dagger_version"
+    kapt "android.arch.lifecycle:compiler:$lifecycle_version"
 }

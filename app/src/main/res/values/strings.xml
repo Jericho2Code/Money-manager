@@ -23,4 +23,18 @@
     <string name="home_rent">Аренда жилья</string>
     <string name="books">Книги и журналы</string>
     <string name="select_category">Выбор категории</string>
+    <string name="save">Сохранить</string>
+    <string name="select_color">Выбрать цвет</string>
+    <string name="add_category">Добавить категорию</string>
+    <string name="category_color">Цвет категории</string>
+    <string name="category_color_subtitle_text">Будет использовать как фон категории</string>
+    <string name="category_title">Название категории</string>
+    <string name="category_saved">Категория сохранена</string>
+    <string name="select_icon_color">Выберете цвет изображения</string>
+    <string name="category_icon">Изображение категории</string>
+    <string name="category_icon_subtitle_text">Будет использовать как изображение категории</string>
+    <string name="category_base_type_title_text">Базовый тип операции в категории</string>
+    <string name="add_icon_to_category">Выбрать изображение</string>
+    <string name="light">Светлый</string>
+    <string name="dark">Тёмный</string>
 </resources>

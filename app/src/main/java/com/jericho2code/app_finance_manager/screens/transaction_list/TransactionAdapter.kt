@@ -11,6 +11,7 @@ import android.widget.TextView
 import com.jericho2code.app_finance_manager.R
 import com.jericho2code.app_finance_manager.application.extensions.color
 import com.jericho2code.app_finance_manager.application.extensions.drawable
+import com.jericho2code.app_finance_manager.application.extensions.drawableIdByName
 import com.jericho2code.app_finance_manager.application.extensions.setTextOrHideIfEmpty
 import com.jericho2code.app_finance_manager.model.entity.TransactionType
 import com.jericho2code.app_finance_manager.model.entity.TransactionWithCategory
@@ -49,6 +50,7 @@ class TransactionAdapter : RecyclerView.Adapter<TransactionAdapter.Holder>() {
 
         @SuppressLint("ResourceAsColor")
         fun bind(item: TransactionWithCategory) {
+            val context = itemView.context
             val transaction = item.transaction!!
             val category = item.category.firstOrNull()
 
@@ -61,16 +63,20 @@ class TransactionAdapter : RecyclerView.Adapter<TransactionAdapter.Holder>() {
             }
 
             category?.let { category ->
+
                 imageBackground.background = GradientDrawable().apply {
                     shape = GradientDrawable.OVAL
-                    setColor(category.color)
+                    setColor(category.backgroundColor)
                 }
-                categoryIcon.setImageDrawable(itemView.context.drawable(category.iconId))
+
+                categoryIcon.setImageDrawable(context.drawable(category.iconIdName?.let {
+                    context.drawableIdByName(it)
+                } ?: R.drawable.ic_money, category.iconColor ?: context?.color(R.color.icon_white)!!))
             }
 
             value.text = sign + transaction.value.toString()
             value.setTextColor(
-                itemView.context.color(
+                context.color(
                     when (transaction.transactionType) {
                         TransactionType.SPENDING_TRANSACTION -> R.color.spending
                         TransactionType.PROFIT_TRANSACTION -> R.color.profit

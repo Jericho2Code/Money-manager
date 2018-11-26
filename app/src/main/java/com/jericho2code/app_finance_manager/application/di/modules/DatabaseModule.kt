@@ -26,10 +26,10 @@ open class DatabaseModule {
                 Category.baseCategories(context).forEach {
                     val category = ContentValues().apply {
                         put("title", it.title)
-                        put("description", it.description)
                         put("baseTransactionType", it.baseTransactionType.value)
-                        put("color", it.color)
-                        put("iconId", it.iconId)
+                        put("backgroundColor", it.backgroundColor)
+                        put("iconIdName", it.iconIdName)
+                        put("iconColor", it.iconColor)
                     }
                     db.insert("category_table", OnConflictStrategy.IGNORE, category)
                 }

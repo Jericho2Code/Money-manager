@@ -22,22 +22,56 @@
               android:label="AddEditTransactionFragment"
               tools:layout="@layout/fragment_add_edit_transaction">
         <action android:id="@+id/action_addEditTransactionFragment_to_selectCategoryFragment"
-                app:destination="@id/selectCategoryFragment" app:enterAnim="@anim/slide_from_left" app:popExitAnim="@anim/slide_to_left"/>
+                app:destination="@id/selectCategoryFragment"
+                app:enterAnim="@anim/slide_from_left"
+                app:popExitAnim="@anim/slide_to_left"/>
     </fragment>
     <fragment android:id="@+id/categoryListFragment"
               android:name="com.jericho2code.app_finance_manager.screens.category_list.CategoryListFragment"
               android:label="CategoryListFragment"
-              tools:layout="@layout/fragment_category_list"/>
+              tools:layout="@layout/fragment_category_list">
+        <action android:id="@+id/action_categoryListFragment_to_addEditCategoryFragment"
+                app:destination="@id/addEditCategoryFragment" app:enterAnim="@anim/slide_from_bottom" app:popExitAnim="@anim/slide_to_bottom"/>
+    </fragment>
     <fragment android:id="@+id/bottomNavigationDrawerFragment"
               android:name="com.jericho2code.app_finance_manager.screens.transaction_list.BottomNavigationDrawerFragment"
               android:label="BottomNavigationDrawerFragment"
               tools:layout="@layout/bottom_sheet_fragment_main_menu">
         <action android:id="@+id/action_bottomNavigationDrawerFragment_to_categoryListFragment"
-                app:destination="@id/categoryListFragment" app:enterAnim="@anim/slide_from_bottom" app:popExitAnim="@anim/slide_to_bottom"/>
+                app:destination="@id/categoryListFragment"
+                app:enterAnim="@anim/slide_from_bottom"
+                app:popExitAnim="@anim/slide_to_bottom"/>
     </fragment>
     <fragment android:id="@+id/selectCategoryFragment"
               android:name="com.jericho2code.app_finance_manager.screens.add_edit_transaction.SelectCategoryFragment"
               android:label="SelectCategoryFragment"
-              tools:layout="@layout/fragment_category_list"/>
+              tools:layout="@layout/fragment_category_list">
+        <action android:id="@+id/action_selectCategoryFragment_to_addEditCategoryFragment"
+                app:destination="@id/addEditCategoryFragment" app:enterAnim="@anim/slide_from_bottom" app:popExitAnim="@anim/slide_to_bottom"/>
+    </fragment>
+    <fragment android:id="@+id/addEditCategoryFragment"
+              android:name="com.jericho2code.app_finance_manager.screens.add_edit_category.AddEditCategoryFragment"
+              android:label="AddEditCategoryFragment"
+              tools:layout="@layout/fragment_add_edit_category">
+        <action android:id="@+id/action_addEditCategoryFragment_to_categoryBackgroundColorSelectorBottomDialogFragment"
+                app:destination="@id/categoryBackgroundColorSelectorBottomDialogFragment"/>
+        <action android:id="@+id/action_addEditCategoryFragment_to_categoryIconSelectorFragment"
+                app:destination="@id/categoryIconSelectorFragment" app:enterAnim="@anim/slide_from_left" app:popExitAnim="@anim/slide_to_left"/>
+    </fragment>
+    <fragment android:id="@+id/categoryBackgroundColorSelectorBottomDialogFragment"
+              android:name="com.jericho2code.app_finance_manager.screens.add_edit_category.CategoryBackgroundColorSelectorBottomDialogFragment"
+              android:label="CategoryBackgroundColorSelectorBottomDialogFragment"
+              tools:layout="@layout/bottom_sheet_fragment_color_selector"/>
+    <fragment android:id="@+id/categoryIconSelectorFragment"
+              android:name="com.jericho2code.app_finance_manager.screens.add_edit_category.icon_selector_list.CategoryIconSelectorFragment"
+              android:label="CategoryIconSelectorFragment"
+              tools:layout="@layout/fragment_category_icon_selector">
+        <action android:id="@+id/action_categoryIconSelectorFragment_to_categoryIconColorSelectorBottomDialogFragment"
+                app:destination="@id/categoryIconColorSelectorBottomDialogFragment"/>
+    </fragment>
+    <fragment android:id="@+id/categoryIconColorSelectorBottomDialogFragment"
+              android:name="com.jericho2code.app_finance_manager.screens.add_edit_category.icon_selector_list.CategoryIconColorSelectorBottomDialogFragment"
+              android:label="CategoryIconColorSelectorBottomDialogFragment"
+              tools:layout="@layout/bottom_sheet_fragment_icon_color_selector"/>
 
 </navigation>

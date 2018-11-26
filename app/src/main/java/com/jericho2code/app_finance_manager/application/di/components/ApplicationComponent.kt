@@ -17,6 +17,7 @@ import dagger.Component
 interface ApplicationComponent {
     fun plusTransactionListComponent(): TransactionListComponent
     fun plusCategoryListComponent(): CategoryListComponent
+    fun plusCategoryAddEditComponent(): CategoryAddEditComponent
     fun plusTransactionAddEditComponent(): TransactionAddEditComponent
 }
 
