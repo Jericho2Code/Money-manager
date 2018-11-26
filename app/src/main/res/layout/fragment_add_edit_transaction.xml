@@ -35,40 +35,49 @@
             
             </android.support.design.widget.TextInputLayout>
             
-            <android.support.design.chip.ChipGroup
-                android:id="@+id/operation_type_group"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                app:singleSelection="true">
+            <HorizontalScrollView android:layout_width="wrap_content"
+                                  android:layout_height="wrap_content"
+                                  android:paddingStart="16dp"
+                                  android:paddingEnd="16dp">
                 
-                <android.support.design.chip.Chip
-                    android:id="@+id/spending"
-                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                <android.support.design.chip.ChipGroup
+                    android:id="@+id/operation_type_group"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:checked="true"
-                    app:chipBackgroundColor="@color/chip_spent_background_color_selector"
-                    android:text="@string/spending"/>
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    app:singleLine="true"
+                    app:singleSelection="true">
+                    
+                    <android.support.design.chip.Chip
+                        android:id="@+id/spending"
+                        style="@style/Widget.MaterialComponents.Chip.Choice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        app:chipBackgroundColor="@color/chip_spent_background_color_selector"
+                        android:text="@string/spending"/>
+                    
+                    <android.support.design.chip.Chip
+                        android:id="@+id/profit"
+                        style="@style/Widget.MaterialComponents.Chip.Choice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:chipBackgroundColor="@color/chip_profit_background_color_selector"
+                        android:text="@string/profit"/>
+                    
+                    <android.support.design.chip.Chip
+                        android:id="@+id/transfer"
+                        style="@style/Widget.MaterialComponents.Chip.Choice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="32dp"
+                        app:chipBackgroundColor="@color/chip_transfer_background_color_selector"
+                        android:text="@string/transfer_between_account"/>
                 
-                <android.support.design.chip.Chip
-                    android:id="@+id/profit"
-                    style="@style/Widget.MaterialComponents.Chip.Choice"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:chipBackgroundColor="@color/chip_profit_background_color_selector"
-                    android:text="@string/profit"/>
-    
-                <android.support.design.chip.Chip
-                    android:id="@+id/transfer"
-                    style="@style/Widget.MaterialComponents.Chip.Choice"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:chipBackgroundColor="@color/chip_transfer_background_color_selector"
-                    android:text="@string/transfer"/>
+                </android.support.design.chip.ChipGroup>
             
-            </android.support.design.chip.ChipGroup>
+            </HorizontalScrollView>
             
             <android.support.design.widget.TextInputLayout
                 style="@style/Widget.Shrine.TextInputLayout"
@@ -103,6 +112,27 @@
                     android:layout_height="wrap_content"
                     android:inputType="text"
                     tools:text="В к-р Большой, на Мстители: Война бесконечности"/>
+            
+            </android.support.design.widget.TextInputLayout>
+            
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/transition_category_field"
+                style="@style/Widget.Shrine.TextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:hintAnimationEnabled="false"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="8dp"
+                android:hint="@string/category">
+                
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/transition_category_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableEnd="@drawable/ic_fill_arrow_right"
+                    android:focusableInTouchMode="false"
+                    android:inputType="text"/>
             
             </android.support.design.widget.TextInputLayout>
         

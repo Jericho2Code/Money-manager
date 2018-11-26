@@ -13,8 +13,53 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="273" />
-                            <option name="y" value="54" />
+                            <option name="x" value="240" />
+                            <option name="y" value="-58" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="bottomNavigationDrawerFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="-71" />
+                            <option name="y" value="312" />
+                          </Point>
+                        </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="action_bottomNavigationDrawerFragment_to_categoryListFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="categoryListFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="221" />
+                            <option name="y" value="319" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="selectCategoryFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="527" />
+                            <option name="y" value="-65" />
                           </Point>
                         </option>
                       </LayoutPositions>
@@ -25,13 +70,18 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="-30" />
-                            <option name="y" value="55" />
+                            <option name="x" value="-201" />
+                            <option name="y" value="-68" />
                           </Point>
                         </option>
                         <option name="myPositions">
                           <map>
                             <entry key="action_transactionListFragment_to_addEditTransactionFragment2">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                            <entry key="action_transactionListFragment_to_bottomNavigationDrawerFragment">
                               <value>
                                 <LayoutPositions />
                               </value>

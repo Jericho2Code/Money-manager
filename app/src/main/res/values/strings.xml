@@ -9,13 +9,18 @@
     <string name="transaction_saved">Операция сохранена</string>
     <string name="spending">Расходы</string>
     <string name="profit">Доходы</string>
-    <string name="transfer">Перевод</string>
+    <string name="transfer_between_account">Перевод между счетами</string>
     <string name="search">Поиск</string>
     <string name="settings">Настройки</string>
     <string name="about">О приложении</string>
     <string name="analytics">Аналитика</string>
     <string name="categories">Категории</string>
+    <string name="category">Категория</string>
     <string name="total_balance">Общий баланс</string>
     <string name="total_profit_for_last_month">Доход за этот месяц</string>
     <string name="total_spent_for_last_month">Расходы за этот месяц</string>
+    <string name="cinema_and_theaters">Кино и театр</string>
+    <string name="home_rent">Аренда жилья</string>
+    <string name="books">Книги и журналы</string>
+    <string name="select_category">Выбор категории</string>
 </resources>

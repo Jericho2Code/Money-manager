@@ -6,7 +6,8 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.Navigation.findNavController
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import com.jericho2code.app_finance_manager.R
 import com.jericho2code.app_finance_manager.application.di.owners.ApplicationComponentOwner
 import com.jericho2code.app_finance_manager.application.extensions.hideKeyboard
@@ -45,7 +46,7 @@ class AddEditTransactionFragment : Fragment() {
         toolbar.inflateMenu(R.menu.save_transaction)
         toolbar.setNavigationOnClickListener {
             context?.hideKeyboard(this.view!!)
-            findNavController(view).popBackStack()
+            findNavController().popBackStack()
         }
         toolbar.menu.findItem(R.id.save_changes).setOnMenuItemClickListener {
             context?.hideKeyboard(this.view!!)
@@ -64,7 +65,7 @@ class AddEditTransactionFragment : Fragment() {
             ).subscribe(
                 {
                     context?.showToast(R.string.transaction_saved)
-                    findNavController(view).popBackStack()
+                    findNavController().popBackStack()
                 },
                 {
                     Snackbar.make(view, it.localizedMessage, Snackbar.LENGTH_SHORT).show()
@@ -72,6 +73,9 @@ class AddEditTransactionFragment : Fragment() {
             )
             true
         }
+        transition_category_input.setOnClickListener(
+            Navigation.createNavigateOnClickListener(R.id.action_addEditTransactionFragment_to_selectCategoryFragment)
+        )
     }
 
     override fun onPause() {

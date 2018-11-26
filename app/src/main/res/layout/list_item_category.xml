@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                             xmlns:app="http://schemas.android.com/apk/res-auto"
+                                             xmlns:tools="http://schemas.android.com/tools"
+                                             style="@style/Layout.ListItem.SingLine">
+    
+    <View
+        android:id="@+id/category_item_image_background"
+        style="@style/Layout.ListItem.Image"
+        android:background="@drawable/mock_transaction_icon"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+    
+    <ImageView
+        android:id="@+id/category_item_image"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/ic_money"
+        app:layout_constraintBottom_toBottomOf="@+id/category_item_image_background"
+        app:layout_constraintStart_toStartOf="@+id/category_item_image_background"
+        app:layout_constraintTop_toTopOf="@+id/category_item_image_background"
+        app:layout_constraintEnd_toEndOf="@+id/category_item_image_background"/>
+    
+    <TextView
+        android:id="@+id/category_item_title_text"
+        style="@style/Text.ListItem.Primary.OneLine"
+        tools:text="Название категории"
+        android:layout_width="0dp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintStart_toEndOf="@+id/category_item_image_background"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+
+</android.support.constraint.ConstraintLayout>

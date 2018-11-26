@@ -1,4 +1,4 @@
-package com.jericho2code.app_finance_manager.screens.category_list
+package com.jericho2code.app_finance_manager.screens.add_edit_transaction
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -11,12 +11,12 @@ import androidx.navigation.fragment.findNavController
 import com.jericho2code.app_finance_manager.R
 import com.jericho2code.app_finance_manager.application.di.owners.ApplicationComponentOwner
 import com.jericho2code.app_finance_manager.model.repositories.CategoryRepository
+import com.jericho2code.app_finance_manager.screens.category_list.CategoryAdapter
 import kotlinx.android.synthetic.main.fragment_category_list.*
 import kotlinx.android.synthetic.main.view_toolbar.*
 import javax.inject.Inject
 
-
-class CategoryListFragment : Fragment() {
+class SelectCategoryFragment : Fragment() {
 
     @Inject
     lateinit var categoryRepository: CategoryRepository
@@ -42,7 +42,7 @@ class CategoryListFragment : Fragment() {
         toolbar.setNavigationOnClickListener {
             findNavController().popBackStack()
         }
-        toolbar.setTitle(R.string.categories)
+        toolbar.setTitle(R.string.select_category)
         category_list.addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.VERTICAL))
         category_list.adapter = adapter
 

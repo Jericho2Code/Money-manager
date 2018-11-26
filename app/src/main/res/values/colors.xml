@@ -27,6 +27,13 @@
     <color name="list_item_secondary">#99000000</color>
     <color name="list_item_primary">#de000000</color>
     
+    
+    <color name="base_category_food">#FFE91E63</color>
+    <color name="base_category_passage">#FF2196F3</color>
+    <color name="base_category_cinema_and_theaters">#FF8BC34A</color>
+    <color name="base_category_rent">#FF9C27B0</color>
+    <color name="base_category_books">#FFFF5722</color>
+    
     <array name="item_category_colors">
         <item>#FFFFC107</item>
         <item>#FF9C27B0</item>
