@@ -12,21 +12,15 @@ class AddEditCategoryViewModel : ViewModel() {
     lateinit var categoryRepository: CategoryRepository
 
     var backgroundColorLiveData = MutableLiveData<Int>()
-    var iconColorLiveData = MutableLiveData<Int>()
     var iconIdLiveData = MutableLiveData<Int>()
 
     fun setBackgroundColor(color: Int?) {
         backgroundColorLiveData.postValue(color)
     }
 
-    fun setIconColor(color: Int?) {
-        iconColorLiveData.postValue(color)
-    }
-
     fun setIconId(id: Int?) {
         iconIdLiveData.postValue(id)
     }
-
 
     fun saveCategory(category: Category) = categoryRepository.saveCategory(category)
 }

@@ -43,7 +43,9 @@ class CategoryAdapter : SimpleListAdapter<Category, CategoryAdapter.Holder>(
             onItemClickListener?.let { onItemClick ->
                 itemView.setOnClickListener { onItemClick(item) }
             }
-            categoryIcon.setImageDrawable(context.drawable(item.iconIdName?.let { context.drawableIdByName(it) } ?: R.drawable.ic_money, item.iconColor ?: context?.color(R.color.icon_white)!!))
+            categoryIcon.setImageDrawable(
+                context.drawable(item.iconIdName?.let { context.drawableIdByName(it) } ?: R.drawable.ic_money,
+                    context?.color(R.color.icon_white)!!))
         }
     }
 }

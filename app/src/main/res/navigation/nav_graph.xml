@@ -66,12 +66,6 @@
               android:name="com.jericho2code.app_finance_manager.screens.add_edit_category.icon_selector_list.CategoryIconSelectorFragment"
               android:label="CategoryIconSelectorFragment"
               tools:layout="@layout/fragment_category_icon_selector">
-        <action android:id="@+id/action_categoryIconSelectorFragment_to_categoryIconColorSelectorBottomDialogFragment"
-                app:destination="@id/categoryIconColorSelectorBottomDialogFragment"/>
     </fragment>
-    <fragment android:id="@+id/categoryIconColorSelectorBottomDialogFragment"
-              android:name="com.jericho2code.app_finance_manager.screens.add_edit_category.icon_selector_list.CategoryIconColorSelectorBottomDialogFragment"
-              android:label="CategoryIconColorSelectorBottomDialogFragment"
-              tools:layout="@layout/bottom_sheet_fragment_icon_color_selector"/>
 
 </navigation>

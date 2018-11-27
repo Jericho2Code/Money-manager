@@ -93,7 +93,7 @@ class AddEditTransactionFragment : Fragment() {
 
     override fun onDetach() {
         super.onDetach()
-        viewModel.setCategory(null)
+        viewModel.categoryLiveData.value = null
     }
 
     override fun onPause() {

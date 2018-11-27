@@ -22,14 +22,13 @@ open class DatabaseModule {
         .addCallback(object : RoomDatabase.Callback() {
             override fun onCreate(db: SupportSQLiteDatabase) {
                 super.onCreate(db)
-                db.execSQL("CREATE TABLE IF NOT EXISTS `category_table` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `title` TEXT NOT NULL, `description` TEXT NOT NULL, `baseTransactionType` TEXT NOT NULL, `color` INTEGER NOT NULL, `iconId` INTEGER NOT NULL)")
+                db.execSQL("CREATE TABLE IF NOT EXISTS `category_table` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `title` TEXT NOT NULL, `baseTransactionType` TEXT NOT NULL, `backgroundColor` INTEGER NOT NULL, `iconIdName` TEXT NOT NULL)")
                 Category.baseCategories(context).forEach {
                     val category = ContentValues().apply {
                         put("title", it.title)
                         put("baseTransactionType", it.baseTransactionType.value)
                         put("backgroundColor", it.backgroundColor)
                         put("iconIdName", it.iconIdName)
-                        put("iconColor", it.iconColor)
                     }
                     db.insert("category_table", OnConflictStrategy.IGNORE, category)
                 }

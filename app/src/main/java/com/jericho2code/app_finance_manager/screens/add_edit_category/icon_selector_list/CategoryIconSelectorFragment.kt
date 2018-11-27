@@ -39,8 +39,7 @@ class CategoryIconSelectorFragment : Fragment() {
             items = context?.getIdsFromTypedArray(R.array.category_icons) ?: emptyList()
             onItemClickListener = { iconId ->
                 viewModel.setIconId(iconId)
-                val colorSelector = CategoryIconColorSelectorBottomDialogFragment()
-                colorSelector.show(childFragmentManager, colorSelector.tag)
+                findNavController().navigateUp()
             }
         }
     }

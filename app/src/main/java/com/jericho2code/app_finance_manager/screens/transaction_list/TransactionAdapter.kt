@@ -71,7 +71,7 @@ class TransactionAdapter : RecyclerView.Adapter<TransactionAdapter.Holder>() {
 
                 categoryIcon.setImageDrawable(context.drawable(category.iconIdName?.let {
                     context.drawableIdByName(it)
-                } ?: R.drawable.ic_money, category.iconColor ?: context?.color(R.color.icon_white)!!))
+                } ?: R.drawable.ic_money, context?.color(R.color.icon_white)!!))
             }
 
             value.text = sign + transaction.value.toString()

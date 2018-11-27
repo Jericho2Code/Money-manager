@@ -9,6 +9,10 @@
         <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogTheme</item>
     </style>
     
+    <style name="AppTheme.StartTheme">
+        <item name="android:windowBackground">@drawable/start_background</item>
+    </style>
+    
     <style name="Widget.Shrine.TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="android:paddingBottom">8dp</item>
     </style>

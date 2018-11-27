@@ -31,6 +31,7 @@ class AddEditCategoryFragment : Fragment() {
             ?.applicationComponent()
             ?.plusCategoryAddEditComponent()
             ?.inject(viewModel)
+
         viewModel.backgroundColorLiveData.observe(this, Observer { color ->
             setColorViewBackgroundColor(color)
         })
@@ -76,9 +77,8 @@ class AddEditCategoryFragment : Fragment() {
                         R.id.profit -> TransactionType.PROFIT_TRANSACTION
                         else -> TransactionType.SPENDING_TRANSACTION
                     },
-                    backgroundColor = viewModel.backgroundColorLiveData.value!!,
-                    iconColor = viewModel.iconColorLiveData.value,
-                    iconIdName = context?.nameForId(viewModel.iconIdLiveData.value!!)
+                    backgroundColor = viewModel.backgroundColorLiveData.value ?: context!!.color(R.color.icon_grey),
+                    iconIdName = context?.nameForId(viewModel.iconIdLiveData.value ?: R.drawable.ic_money)
                 )
             ).subscribe({
                 context?.showToast(R.string.category_saved)
@@ -97,9 +97,8 @@ class AddEditCategoryFragment : Fragment() {
 
     override fun onDetach() {
         super.onDetach()
-        viewModel.setIconColor(null)
-        viewModel.setBackgroundColor(null)
-        viewModel.setIconId(null)
+        viewModel.iconIdLiveData.value = null
+        viewModel.backgroundColorLiveData.value = null
     }
 
 }
