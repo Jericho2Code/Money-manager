@@ -32,7 +32,7 @@ class CategoryListFragment : Fragment() {
             ?.inject(viewModel)
 
         viewModel.categories().observe(this, Observer {
-            adapter.items = it ?: emptyList()
+            adapter.items = it?.sortedBy { it.title } ?: emptyList()
         })
     }
 

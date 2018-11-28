@@ -34,7 +34,7 @@ class TransactionListFragment : Fragment() {
             ?.inject(viewModel)
 
         viewModel.transactionsWithCategory().observe(this, Observer<List<TransactionWithCategory>> { transactions ->
-            adapter.items = transactions ?: emptyList()
+            adapter.items = transactions?.sortedByDescending { it.transaction?.date } ?: emptyList()
             initStatisticsCards(transactions ?: emptyList())
         })
     }

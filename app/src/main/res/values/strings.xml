@@ -37,4 +37,7 @@
     <string name="add_icon_to_category">Выбрать изображение</string>
     <string name="light">Светлый</string>
     <string name="dark">Тёмный</string>
+    <string name="transaction_date">Дата операции</string>
+    <string name="transaction_date_subtitle_text">Сегодня, 21 декабря 2018</string>
+    <string name="today">Сегодня</string>
 </resources>

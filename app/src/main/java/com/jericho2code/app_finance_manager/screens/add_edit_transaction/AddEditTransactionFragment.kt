@@ -1,5 +1,6 @@
 package com.jericho2code.app_finance_manager.screens.add_edit_transaction
 
+import android.annotation.SuppressLint
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
@@ -12,13 +13,12 @@ import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.jericho2code.app_finance_manager.R
 import com.jericho2code.app_finance_manager.application.di.owners.ApplicationComponentOwner
-import com.jericho2code.app_finance_manager.application.extensions.hideKeyboard
-import com.jericho2code.app_finance_manager.application.extensions.showToast
+import com.jericho2code.app_finance_manager.application.extensions.*
 import com.jericho2code.app_finance_manager.model.entity.Transaction
 import com.jericho2code.app_finance_manager.model.entity.TransactionType
 import kotlinx.android.synthetic.main.fragment_add_edit_transaction.*
 import kotlinx.android.synthetic.main.view_toolbar.*
-import org.threeten.bp.LocalDate
+import org.threeten.bp.LocalDateTime
 
 class AddEditTransactionFragment : Fragment() {
 
@@ -36,13 +36,17 @@ class AddEditTransactionFragment : Fragment() {
             category?.let {
                 when (it.baseTransactionType) {
                     TransactionType.SPENDING_TRANSACTION -> spending.isChecked = true
-                        TransactionType.PROFIT_TRANSACTION -> profit.isChecked = true
+                    TransactionType.PROFIT_TRANSACTION -> profit.isChecked = true
                     else -> spending.isChecked = true
                 }
             } ?: run {
                 spending.isChecked = true
             }
         })
+        viewModel.transactionDateLiveData.observe(this, Observer {
+            it?.let { setTransactionDateText(it) }
+        })
+        viewModel.setTransactionDate(LocalDateTime.now())
     }
 
     override fun onCreateView(
@@ -67,7 +71,7 @@ class AddEditTransactionFragment : Fragment() {
                     value = transition_sum_input.text.toString().toDoubleOrNull() ?: 0.0,
                     title = transition_title_input.text.toString(),
                     description = transition_description_input.text.toString(),
-                    date = LocalDate.now(),
+                    date = viewModel.transactionDateLiveData.value ?: LocalDateTime.now(),
                     transactionType = when (operation_type_group.checkedChipId) {
                         R.id.spending -> TransactionType.SPENDING_TRANSACTION
                         R.id.profit -> TransactionType.PROFIT_TRANSACTION
@@ -86,14 +90,27 @@ class AddEditTransactionFragment : Fragment() {
             )
             true
         }
+        date_selector_input.setOnClickListener {
+            val transactionDate = viewModel.transactionDateLiveData.value ?: LocalDateTime.now()
+            val datePickerDialog = TransactionDatePickerDialog.instance(transactionDate.toLocalDate())
+            datePickerDialog.show(childFragmentManager, datePickerDialog.tag)
+        }
         transition_category_input.setOnClickListener(
             Navigation.createNavigateOnClickListener(R.id.action_addEditTransactionFragment_to_selectCategoryFragment)
         )
+        viewModel.transactionDateLiveData.value?.let { setTransactionDateText(it) }
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun setTransactionDateText(date: LocalDateTime) {
+        val todayText = if (date.isToday()) context?.str(R.string.today) + ", " else ""
+        date_selector_input.setText(todayText + date.toFullDateString())
     }
 
     override fun onDetach() {
         super.onDetach()
         viewModel.categoryLiveData.value = null
+        viewModel.transactionDateLiveData.value = null
     }
 
     override fun onPause() {
