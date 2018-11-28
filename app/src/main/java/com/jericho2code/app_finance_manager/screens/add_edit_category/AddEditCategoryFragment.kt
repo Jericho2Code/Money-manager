@@ -48,7 +48,7 @@ class AddEditCategoryFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        toolbar.setNavigationIcon(R.drawable.ic_close)
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_back)
         toolbar.setTitle(R.string.add_category)
         toolbar.inflateMenu(R.menu.save_category)
         toolbar.setNavigationOnClickListener {

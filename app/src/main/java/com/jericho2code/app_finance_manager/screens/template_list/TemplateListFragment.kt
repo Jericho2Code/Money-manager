@@ -1,4 +1,4 @@
-package com.jericho2code.app_finance_manager.screens.category_list
+package com.jericho2code.app_finance_manager.screens.template_list
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
@@ -9,38 +9,41 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.jericho2code.app_finance_manager.R
 import com.jericho2code.app_finance_manager.application.di.owners.ApplicationComponentOwner
-import kotlinx.android.synthetic.main.fragment_category_list.*
+import com.jericho2code.app_finance_manager.screens.add_edit_transaction.AddEditTransactionFragment
+import kotlinx.android.synthetic.main.fragment_template_list.*
 import kotlinx.android.synthetic.main.view_toolbar.*
 
+class TemplateListFragment : Fragment() {
 
-class CategoryListFragment : Fragment() {
-
-    private val adapter = CategoryAdapter()
-    private lateinit var viewModel: CategoryListViewModel
+    private lateinit var viewModel: TemplateListViewModel
+    private val adapter: TemplateAdapter = TemplateAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        viewModel = ViewModelProviders.of(this).get(CategoryListViewModel::class.java)
+        viewModel = ViewModelProviders.of(this).get(TemplateListViewModel::class.java)
         (activity?.application  as? ApplicationComponentOwner)
             ?.applicationComponent()
-            ?.plusCategoryListComponent()
+            ?.plusTemplateListComponent()
             ?.inject(viewModel)
-
-        viewModel.categories().observe(this, Observer {
-            adapter.items = it?.sortedBy { it.title } ?: emptyList()
+        viewModel.templates().observe(this, Observer {
+            adapter.items = it ?: emptyList()
         })
+        adapter.onItemClickListener = { template ->
+            findNavController().navigate(
+                R.id.action_templateListFragment_to_addEditTransactionFragment,
+                AddEditTransactionFragment.createArgs(template)
+            )
+        }
     }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.fragment_category_list, container, false)
+    ): View? = inflater.inflate(R.layout.fragment_template_list, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -48,12 +51,8 @@ class CategoryListFragment : Fragment() {
         toolbar.setNavigationOnClickListener {
             findNavController().navigateUp()
         }
-        toolbar.setTitle(R.string.categories)
-        category_list.addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.VERTICAL))
-        category_list.adapter = adapter
-
-        add_category_fab.setOnClickListener(
-            Navigation.createNavigateOnClickListener(R.id.action_categoryListFragment_to_addEditCategoryFragment)
-        )
+        toolbar.setTitle(R.string.templates)
+        template_list.addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.VERTICAL))
+        template_list.adapter = adapter
     }
 }

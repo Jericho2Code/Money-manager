@@ -15,6 +15,8 @@
                 app:popExitAnim="@anim/slide_to_bottom"/>
         <action android:id="@+id/action_transactionListFragment_to_bottomNavigationDrawerFragment"
                 app:destination="@id/bottomNavigationDrawerFragment"/>
+        <action android:id="@+id/action_transactionListFragment_to_templateListFragment"
+                app:destination="@id/templateListFragment" app:enterAnim="@anim/slide_from_bottom" app:popExitAnim="@anim/slide_to_bottom"/>
     </fragment>
     
     <fragment android:id="@+id/addEditTransactionFragment"
@@ -31,7 +33,7 @@
               android:label="CategoryListFragment"
               tools:layout="@layout/fragment_category_list">
         <action android:id="@+id/action_categoryListFragment_to_addEditCategoryFragment"
-                app:destination="@id/addEditCategoryFragment" app:enterAnim="@anim/slide_from_bottom" app:popExitAnim="@anim/slide_to_bottom"/>
+                app:destination="@id/addEditCategoryFragment" app:enterAnim="@anim/slide_from_left" app:popExitAnim="@anim/slide_to_left"/>
     </fragment>
     <fragment android:id="@+id/bottomNavigationDrawerFragment"
               android:name="com.jericho2code.app_finance_manager.screens.transaction_list.BottomNavigationDrawerFragment"
@@ -47,7 +49,7 @@
               android:label="SelectCategoryFragment"
               tools:layout="@layout/fragment_category_list">
         <action android:id="@+id/action_selectCategoryFragment_to_addEditCategoryFragment"
-                app:destination="@id/addEditCategoryFragment" app:enterAnim="@anim/slide_from_bottom" app:popExitAnim="@anim/slide_to_bottom"/>
+                app:destination="@id/addEditCategoryFragment" app:enterAnim="@anim/slide_from_left" app:popExitAnim="@anim/slide_to_left"/>
     </fragment>
     <fragment android:id="@+id/addEditCategoryFragment"
               android:name="com.jericho2code.app_finance_manager.screens.add_edit_category.AddEditCategoryFragment"
@@ -66,6 +68,13 @@
               android:name="com.jericho2code.app_finance_manager.screens.add_edit_category.icon_selector_list.CategoryIconSelectorFragment"
               android:label="CategoryIconSelectorFragment"
               tools:layout="@layout/fragment_category_icon_selector">
+    </fragment>
+    <fragment android:id="@+id/templateListFragment"
+              android:name="com.jericho2code.app_finance_manager.screens.template_list.TemplateListFragment"
+              android:label="TemplateListFragment"
+              tools:layout="@layout/fragment_template_list">
+        <action android:id="@+id/action_templateListFragment_to_addEditTransactionFragment"
+                app:destination="@id/addEditTransactionFragment" app:enterAnim="@anim/slide_from_left" app:popExitAnim="@anim/slide_to_left"/>
     </fragment>
 
 </navigation>

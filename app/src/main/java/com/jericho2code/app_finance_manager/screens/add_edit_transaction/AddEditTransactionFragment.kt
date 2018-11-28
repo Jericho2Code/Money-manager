@@ -14,10 +14,14 @@ import androidx.navigation.fragment.findNavController
 import com.jericho2code.app_finance_manager.R
 import com.jericho2code.app_finance_manager.application.di.owners.ApplicationComponentOwner
 import com.jericho2code.app_finance_manager.application.extensions.*
+import com.jericho2code.app_finance_manager.model.entity.Template
+import com.jericho2code.app_finance_manager.model.entity.TemplateFullObject
 import com.jericho2code.app_finance_manager.model.entity.Transaction
 import com.jericho2code.app_finance_manager.model.entity.TransactionType
+import io.reactivex.Single
 import kotlinx.android.synthetic.main.fragment_add_edit_transaction.*
 import kotlinx.android.synthetic.main.view_toolbar.*
+import kotlinx.android.synthetic.main.view_transaction_save_as_template_item.*
 import org.threeten.bp.LocalDateTime
 
 class AddEditTransactionFragment : Fragment() {
@@ -46,7 +50,24 @@ class AddEditTransactionFragment : Fragment() {
         viewModel.transactionDateLiveData.observe(this, Observer {
             it?.let { setTransactionDateText(it) }
         })
+        viewModel.templateDateLiveData.observe(this, Observer { template ->
+            template?.run {
+                viewModel.setCategory(category.first())
+                transaction.first().let {
+                    transition_sum_input.setText(it.value.toString())
+                    transition_title_input.setText(it.title)
+                    transition_description_input.setText(it.description)
+                    viewModel.setAsTemplateVisibility(false)
+                }
+            }
+        })
+        viewModel.saveAsTemplateVisibilityLiveData.observe(this, Observer { isVisible ->
+            transaction_save_as_template_field.visibleOrGone(isVisible ?: true)
+        })
         viewModel.setTransactionDate(LocalDateTime.now())
+        val template = arguments?.getParcelable<TemplateFullObject>(TEMPLATE)
+        template?.let { viewModel.setTemplate(it) }
+        viewModel.setAsTemplateVisibility(template == null)
     }
 
     override fun onCreateView(
@@ -79,10 +100,22 @@ class AddEditTransactionFragment : Fragment() {
                     },
                     categoryId = viewModel.categoryLiveData.value?.id ?: 0
                 )
-            ).subscribe(
+            ).flatMap { transitionId ->
+                if (transaction_save_as_template_checkbox.isChecked) {
+                    viewModel.saveTemplate(
+                        Template(
+                            usageCount = 1,
+                            transactionId = transitionId,
+                            categoryId = viewModel.categoryLiveData.value?.id ?: 0
+                        )
+                    )
+                } else {
+                    Single.just(transitionId)
+                }
+            }.subscribe(
                 {
                     context?.showToast(R.string.transaction_saved)
-                    findNavController().navigateUp()
+                    findNavController().popBackStack(R.id.transactionListFragment, false)
                 },
                 {
                     Snackbar.make(view, it.localizedMessage, Snackbar.LENGTH_SHORT).show()
@@ -111,10 +144,21 @@ class AddEditTransactionFragment : Fragment() {
         super.onDetach()
         viewModel.categoryLiveData.value = null
         viewModel.transactionDateLiveData.value = null
+        viewModel.templateDateLiveData.value = null
+        viewModel.saveAsTemplateVisibilityLiveData.value = null
     }
 
     override fun onPause() {
         super.onPause()
         context?.hideKeyboard(view!!)
+    }
+
+    companion object {
+
+        const val TEMPLATE = "template"
+
+        fun createArgs(template: TemplateFullObject) = Bundle().apply {
+            putParcelable(TEMPLATE, template)
+        }
     }
 }

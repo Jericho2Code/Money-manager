@@ -166,3 +166,11 @@ fun Context.getIdsFromTypedArray(@ArrayRes colorArrayId: Int): List<Int> {
     }
     return result
 }
+
+/**
+ * Устанавливает для textview видмость в зависимости от  isVisible,
+ * в случае false делает view GONE
+ */
+fun View.visibleOrGone(isVisible: Boolean?) {
+    if (isVisible == true) visible() else gone()
+}

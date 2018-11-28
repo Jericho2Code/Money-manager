@@ -22,5 +22,5 @@ class CategoryModule {
     ): CategoryRepository = CategoryRepository(dao, uiScheduler, ioScheduler)
 
     @Provides
-    fun provideDao(db: AppDatabase): CategoryDao = db.categorynDao()
+    fun provideDao(db: AppDatabase): CategoryDao = db.categoryDao()
 }

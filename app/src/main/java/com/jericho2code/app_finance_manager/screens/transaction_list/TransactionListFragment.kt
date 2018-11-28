@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import com.jericho2code.app_finance_manager.R
 import com.jericho2code.app_finance_manager.application.di.owners.ApplicationComponentOwner
 import com.jericho2code.app_finance_manager.model.entity.TransactionType
@@ -69,6 +70,10 @@ class TransactionListFragment : Fragment() {
         bottom_bar.setNavigationOnClickListener {
             val bottomNavDrawerFragment = BottomNavigationDrawerFragment()
             bottomNavDrawerFragment.show(childFragmentManager, bottomNavDrawerFragment.tag)
+        }
+        bottom_bar.menu.findItem(R.id.templateListFragment).setOnMenuItemClickListener {
+            findNavController().navigate(R.id.action_transactionListFragment_to_templateListFragment)
+            true
         }
         initStatisticsCards(adapter.items)
     }

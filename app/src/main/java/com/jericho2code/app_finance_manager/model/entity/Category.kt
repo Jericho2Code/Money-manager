@@ -3,13 +3,16 @@ package com.jericho2code.app_finance_manager.model.entity
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
 import android.content.Context
+import android.os.Parcelable
 import com.jericho2code.app_finance_manager.R
 import com.jericho2code.app_finance_manager.application.extensions.color
 import com.jericho2code.app_finance_manager.application.extensions.nameForId
 import com.jericho2code.app_finance_manager.application.extensions.str
 import com.jericho2code.app_finance_manager.model.entity.Category.Companion.CATEGORY_TABLE
+import kotlinx.android.parcel.Parcelize
 
 @Entity(tableName = CATEGORY_TABLE)
+@Parcelize
 class Category(
     @PrimaryKey(autoGenerate = true)
     var id: Long? = null,
@@ -17,7 +20,7 @@ class Category(
     var baseTransactionType: TransactionType = TransactionType.SPENDING_TRANSACTION,
     var backgroundColor: Int = R.color.base_category_background,
     var iconIdName: String? = null
-) {
+): Parcelable {
     companion object {
         const val CATEGORY_TABLE = "category_table"
         const val ID = "id"

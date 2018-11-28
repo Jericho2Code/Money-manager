@@ -79,7 +79,7 @@
                 </android.support.design.chip.ChipGroup>
             
             </HorizontalScrollView>
-    
+            
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/date_selector_field"
                 style="@style/Widget.Shrine.TextInputLayout"
@@ -90,7 +90,7 @@
                 android:layout_marginEnd="16dp"
                 android:layout_marginTop="8dp"
                 android:hint="@string/transaction_date">
-        
+                
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/date_selector_input"
                     android:layout_width="match_parent"
@@ -99,7 +99,7 @@
                     android:focusableInTouchMode="false"
                     android:cursorVisible="false"
                     android:inputType="text"/>
-    
+            
             </android.support.design.widget.TextInputLayout>
             
             <android.support.design.widget.TextInputLayout
@@ -147,6 +147,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
                 android:hint="@string/category">
                 
                 <android.support.design.widget.TextInputEditText
@@ -159,6 +160,8 @@
                     android:inputType="text"/>
             
             </android.support.design.widget.TextInputLayout>
+            
+            <include android:id="@+id/transaction_save_as_template_field" layout="@layout/view_transaction_save_as_template_item"/>
         
         </LinearLayout>
     
