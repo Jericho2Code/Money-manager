@@ -4,7 +4,7 @@ import android.arch.persistence.room.ColumnInfo
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
 import com.jericho2code.app_finance_manager.model.entity.Transaction.Companion.TRANSACTION_TABLE
-import org.threeten.bp.LocalDate
+import org.threeten.bp.LocalDateTime
 
 @Entity(tableName = TRANSACTION_TABLE)
 class Transaction(
@@ -13,7 +13,7 @@ class Transaction(
     var title: String = "",
     var description: String = "",
     var value: Double = 0.0,
-    var date: LocalDate? = null,
+    var date: LocalDateTime? = null,
     var transactionType: TransactionType? = null,
     @ColumnInfo(name = "category_id")
     var categoryId: Long = 2

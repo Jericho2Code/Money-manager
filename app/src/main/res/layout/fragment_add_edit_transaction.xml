@@ -79,6 +79,28 @@
                 </android.support.design.chip.ChipGroup>
             
             </HorizontalScrollView>
+    
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/date_selector_field"
+                style="@style/Widget.Shrine.TextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:hintAnimationEnabled="false"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="8dp"
+                android:hint="@string/transaction_date">
+        
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/date_selector_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableEnd="@drawable/ic_today"
+                    android:focusableInTouchMode="false"
+                    android:cursorVisible="false"
+                    android:inputType="text"/>
+    
+            </android.support.design.widget.TextInputLayout>
             
             <android.support.design.widget.TextInputLayout
                 style="@style/Widget.Shrine.TextInputLayout"
@@ -132,6 +154,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:drawableEnd="@drawable/ic_fill_arrow_right"
+                    android:cursorVisible="false"
                     android:focusableInTouchMode="false"
                     android:inputType="text"/>
             

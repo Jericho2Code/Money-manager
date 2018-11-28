@@ -6,6 +6,7 @@ import com.jericho2code.app_finance_manager.model.entity.Transaction
 import com.jericho2code.app_finance_manager.model.repositories.CategoryRepository
 import com.jericho2code.app_finance_manager.model.repositories.TransactionRepository
 import com.jericho2code.app_finance_manager.utils.BaseViewModel
+import org.threeten.bp.LocalDateTime
 import javax.inject.Inject
 
 class AddEditTransactionViewModel : BaseViewModel() {
@@ -17,12 +18,18 @@ class AddEditTransactionViewModel : BaseViewModel() {
     lateinit var categoryRepository: CategoryRepository
 
     var categoryLiveData = MutableLiveData<Category>()
+    var transactionDateLiveData = MutableLiveData<LocalDateTime>()
 
     fun saveTransaction(transaction: Transaction) = transactionRepository.saveTransaction(transaction)
 
     fun categories() = categoryRepository.categories()
 
-    fun setCategory(category: Category?) {
+    fun setCategory(category: Category) {
         categoryLiveData.postValue(category)
     }
+
+    fun setTransactionDate(date: LocalDateTime) {
+        transactionDateLiveData.postValue(date)
+    }
+
 }

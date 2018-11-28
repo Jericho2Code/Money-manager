@@ -74,7 +74,7 @@ captures
 *.iml
 
 ## Directory-based project format:
-.idea
+.idea/
 
 ## File-based project format:
 *.ipr
