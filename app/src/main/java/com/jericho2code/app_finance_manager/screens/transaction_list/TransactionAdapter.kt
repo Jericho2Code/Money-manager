@@ -3,9 +3,7 @@ package com.jericho2code.app_finance_manager.screens.transaction_list
 import android.annotation.SuppressLint
 import android.graphics.drawable.GradientDrawable
 import android.support.v7.widget.RecyclerView
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.jericho2code.app_finance_manager.R
@@ -15,29 +13,18 @@ import com.jericho2code.app_finance_manager.application.extensions.drawableIdByN
 import com.jericho2code.app_finance_manager.application.extensions.setTextOrHideIfEmpty
 import com.jericho2code.app_finance_manager.model.entity.TransactionType
 import com.jericho2code.app_finance_manager.model.entity.TransactionWithCategory
+import ru.kinoplan24.app.presentation.utils.adapters.SimpleListAdapter
 
-class TransactionAdapter : RecyclerView.Adapter<TransactionAdapter.Holder>() {
+class TransactionAdapter : SimpleListAdapter<TransactionWithCategory, TransactionAdapter.Holder>({
+    R.layout.list_item_transaction
+}) {
 
-    var items: List<TransactionWithCategory> = emptyList()
-        set(value) {
-            field = value
-            notifyDataSetChanged()
-        }
+    var onItemClickListener: ((template: TransactionWithCategory) -> Unit)? = null
 
-    override fun onCreateViewHolder(parent: ViewGroup, position: Int): Holder =
-        Holder(
-            LayoutInflater.from(parent.context)
-                .inflate(
-                    R.layout.list_item_transaction,
-                    parent,
-                    false
-                )
-        )
+    override fun onCreateViewHolder(view: View, viewType: Int): Holder = Holder(view)
 
-    override fun getItemCount(): Int = items.size
-
-    override fun onBindViewHolder(holder: Holder, position: Int) {
-        holder.bind(items[position])
+    override fun onBindViewHolder(holder: Holder, item: TransactionWithCategory, position: Int) {
+        holder.bind(item, onItemClickListener)
     }
 
     class Holder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -49,10 +36,16 @@ class TransactionAdapter : RecyclerView.Adapter<TransactionAdapter.Holder>() {
         private val categoryIcon = itemView.findViewById<ImageView>(R.id.transaction_item_image_category)
 
         @SuppressLint("ResourceAsColor")
-        fun bind(item: TransactionWithCategory) {
+        fun bind(item: TransactionWithCategory, onItemClickListener: ((template: TransactionWithCategory) -> Unit)?) {
             val context = itemView.context
             val transaction = item.transaction!!
             val category = item.category.firstOrNull()
+
+            onItemClickListener?.let { onClick ->
+                itemView.setOnClickListener {
+                    onClick(item)
+                }
+            }
 
             title.text = transaction.title
             description.setTextOrHideIfEmpty(transaction.description)

@@ -1,10 +1,7 @@
 package com.jericho2code.app_finance_manager.screens.add_edit_transaction
 
 import android.arch.lifecycle.MutableLiveData
-import com.jericho2code.app_finance_manager.model.entity.Category
-import com.jericho2code.app_finance_manager.model.entity.Template
-import com.jericho2code.app_finance_manager.model.entity.TemplateFullObject
-import com.jericho2code.app_finance_manager.model.entity.Transaction
+import com.jericho2code.app_finance_manager.model.entity.*
 import com.jericho2code.app_finance_manager.model.repositories.CategoryRepository
 import com.jericho2code.app_finance_manager.model.repositories.TemplateRepository
 import com.jericho2code.app_finance_manager.model.repositories.TransactionRepository
@@ -25,8 +22,12 @@ class AddEditTransactionViewModel : BaseViewModel() {
     var transactionDateLiveData = MutableLiveData<LocalDateTime>()
     var templateDateLiveData = MutableLiveData<TemplateFullObject>()
     var saveAsTemplateVisibilityLiveData = MutableLiveData<Boolean>()
+    var editTransactionLiveData = MutableLiveData<TransactionWithCategory>()
+    var transactionTypeLiveData = MutableLiveData<TransactionType>()
 
     fun saveTransaction(transaction: Transaction) = transactionRepository.saveTransaction(transaction)
+
+    fun updateTransaction(transaction: Transaction) = transactionRepository.updateTransaction(transaction)
 
     fun saveTemplate(template: Template) = templateRepository.saveTemplate(template)
 
@@ -46,5 +47,13 @@ class AddEditTransactionViewModel : BaseViewModel() {
 
     fun setAsTemplateVisibility(isVisible: Boolean) {
         saveAsTemplateVisibilityLiveData.postValue(isVisible)
+    }
+
+    fun setEditTransaction(transaction: TransactionWithCategory) {
+        editTransactionLiveData.postValue(transaction)
+    }
+
+    fun setTransactionType(transactionType: TransactionType) {
+        transactionTypeLiveData.postValue(transactionType)
     }
 }

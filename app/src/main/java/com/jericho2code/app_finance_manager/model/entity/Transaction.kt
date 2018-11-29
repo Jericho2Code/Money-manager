@@ -17,9 +17,11 @@ class Transaction(
     var description: String = "",
     var value: Double = 0.0,
     var date: LocalDateTime? = null,
-    var transactionType: TransactionType? = null,
+    var transactionType: TransactionType = TransactionType.SPENDING_TRANSACTION,
     @ColumnInfo(name = "category_id")
-    var categoryId: Long? = null
+    var categoryId: Long? = null,
+    @ColumnInfo(name = "is_template")
+    var isTemplate: Boolean = false
 ): Parcelable {
     companion object {
         const val TRANSACTION_TABLE = "transaction_table"

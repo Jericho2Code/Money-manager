@@ -14,10 +14,17 @@ class TransactionRepository @Inject constructor(
     private val ioScheduler: Scheduler
 ) {
 
-    fun transactionsWithCategories(): LiveData<List<TransactionWithCategory>> = transactionDao.transactionsWithCategory()
+    fun transactionsWithCategories(): LiveData<List<TransactionWithCategory>> =
+        transactionDao.transactionsWithCategory()
 
-    fun saveTransaction(transaction: Transaction): Single<Long> = Single.fromCallable { transactionDao.insert(transaction) }
-        .subscribeOn(ioScheduler)
-        .observeOn(uiScheduler)
+    fun saveTransaction(transaction: Transaction): Single<Long> =
+        Single.fromCallable { transactionDao.insert(transaction) }
+            .subscribeOn(ioScheduler)
+            .observeOn(uiScheduler)
+
+    fun updateTransaction(transaction: Transaction): Single<Unit> =
+        Single.fromCallable { transactionDao.update(transaction) }
+            .subscribeOn(ioScheduler)
+            .observeOn(uiScheduler)
 
 }

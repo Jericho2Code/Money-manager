@@ -15,6 +15,7 @@ import com.jericho2code.app_finance_manager.R
 import com.jericho2code.app_finance_manager.application.di.owners.ApplicationComponentOwner
 import com.jericho2code.app_finance_manager.model.entity.TransactionType
 import com.jericho2code.app_finance_manager.model.entity.TransactionWithCategory
+import com.jericho2code.app_finance_manager.screens.add_edit_transaction.AddEditTransactionFragment
 import kotlinx.android.synthetic.main.fragment_transaction_list.*
 import kotlinx.android.synthetic.main.view_transaction_list_header.*
 
@@ -38,6 +39,13 @@ class TransactionListFragment : Fragment() {
             adapter.items = transactions?.sortedByDescending { it.transaction?.date } ?: emptyList()
             initStatisticsCards(transactions ?: emptyList())
         })
+
+        adapter.onItemClickListener = { transaction ->
+            findNavController().navigate(
+                R.id.action_transactionListFragment_to_addEditTransactionFragment2,
+                AddEditTransactionFragment.createArgs(transaction)
+            )
+        }
     }
 
     private fun initStatisticsCards(transactions: List<TransactionWithCategory>) {
