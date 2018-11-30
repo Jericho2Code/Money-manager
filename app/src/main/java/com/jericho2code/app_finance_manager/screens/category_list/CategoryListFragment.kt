@@ -27,7 +27,7 @@ class CategoryListFragment : StateFragment<CategoryListViewModel>() {
         super.onCreate(savedInstanceState)
         viewModel.categories().observe(this, Observer { categories ->
             if (categories?.isNullOrEmpty() == true) {
-                viewModel.setState(ScreenState.LOADING)
+                viewModel.setState(ScreenState.EMPTY)
             } else {
                 adapter.items = categories.sortedBy { it.title }
                 viewModel.setState(ScreenState.CONTENT)
@@ -77,5 +77,9 @@ class CategoryListFragment : StateFragment<CategoryListViewModel>() {
 
     override fun showError() {}
 
-    override fun showEmpty() {}
+    override fun showEmpty() {
+        category_list_empty.visible()
+        category_list_progress.gone()
+        category_list.gone()
+    }
 }

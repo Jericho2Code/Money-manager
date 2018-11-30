@@ -46,4 +46,7 @@
     <string name="edit_transaction">Изменить операцию</string>
     <string name="title_not_exist">Название отсутствует</string>
     <string name="transaction_type">Тип операции</string>
+    <string name="transaction_empty">Операции не найдены</string>
+    <string name="template_not_found">Шаблоны не найдены</string>
+    <string name="category_not_found">Категории не найдены</string>
 </resources>

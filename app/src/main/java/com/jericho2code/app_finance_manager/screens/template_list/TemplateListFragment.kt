@@ -28,7 +28,7 @@ class TemplateListFragment : StateFragment<TemplateListViewModel>() {
         super.onCreate(savedInstanceState)
         viewModel.templates().observe(this, Observer { templates ->
             if (templates?.isNullOrEmpty() == true) {
-                viewModel.setState(ScreenState.LOADING)
+                viewModel.setState(ScreenState.EMPTY)
             } else {
                 adapter.items = templates.sortedByDescending { it.template?.usageCount }
                 viewModel.setState(ScreenState.CONTENT)
@@ -86,5 +86,9 @@ class TemplateListFragment : StateFragment<TemplateListViewModel>() {
 
     override fun showError() {}
 
-    override fun showEmpty() {}
+    override fun showEmpty() {
+        template_list_empty.visible()
+        template_list_progress.gone()
+        template_list.gone()
+    }
 }

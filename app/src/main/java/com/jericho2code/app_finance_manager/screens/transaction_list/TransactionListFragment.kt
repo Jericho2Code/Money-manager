@@ -32,7 +32,7 @@ class TransactionListFragment : StateFragment<TransactionListViewModel>() {
         super.onCreate(savedInstanceState)
         viewModel.transactionsWithCategory().observe(this, Observer<List<TransactionWithCategory>> { transactions ->
             if (transactions?.isNullOrEmpty() == true) {
-                viewModel.setState(ScreenState.LOADING)
+                viewModel.setState(ScreenState.EMPTY)
             } else {
                 adapter.items = transactions.sortedByDescending { it.transaction?.date }
                 initStatisticsCards(transactions)
@@ -105,13 +105,19 @@ class TransactionListFragment : StateFragment<TransactionListViewModel>() {
     override fun showLoading() {
         transaction_list_progress.visible()
         transaction_list_content.gone()
+        transaction_list_empty.gone()
     }
 
     override fun showContent() {
         transaction_list_content.visible()
         transaction_list_progress.gone()
+        transaction_list_empty.gone()
     }
 
     override fun showError() {}
-    override fun showEmpty() {}
+    override fun showEmpty() {
+        transaction_list_content.visible()
+        transaction_list_progress.gone()
+        transaction_list_empty.visible()
+    }
 }

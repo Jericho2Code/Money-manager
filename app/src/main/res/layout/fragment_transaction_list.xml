@@ -52,6 +52,14 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"/>
     
+        <TextView
+            android:id="@+id/transaction_list_empty"
+            android:text="@string/transaction_empty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_gravity="center"/>
+    
     </FrameLayout>
     
     <android.support.design.bottomappbar.BottomAppBar
