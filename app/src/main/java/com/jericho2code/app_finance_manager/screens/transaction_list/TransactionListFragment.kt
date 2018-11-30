@@ -3,7 +3,6 @@ package com.jericho2code.app_finance_manager.screens.transaction_list
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
@@ -13,31 +12,32 @@ import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.jericho2code.app_finance_manager.R
 import com.jericho2code.app_finance_manager.application.di.owners.ApplicationComponentOwner
+import com.jericho2code.app_finance_manager.application.extensions.gone
+import com.jericho2code.app_finance_manager.application.extensions.visible
 import com.jericho2code.app_finance_manager.model.entity.TransactionType
 import com.jericho2code.app_finance_manager.model.entity.TransactionWithCategory
 import com.jericho2code.app_finance_manager.screens.add_edit_transaction.AddEditTransactionFragment
+import com.jericho2code.app_finance_manager.utils.ScreenState
+import com.jericho2code.app_finance_manager.utils.StateFragment
 import kotlinx.android.synthetic.main.fragment_transaction_list.*
 import kotlinx.android.synthetic.main.view_transaction_list_header.*
+import ru.kinoplan24.app.presentation.utils.sticky_headers.RecyclerSectionItemDecoration
 
 
-class TransactionListFragment : Fragment() {
+class TransactionListFragment : StateFragment<TransactionListViewModel>() {
 
-    private lateinit var viewModel: TransactionListViewModel
     private var adapter = TransactionAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        viewModel = ViewModelProviders.of(this).get(TransactionListViewModel::class.java)
-
-        (activity?.application  as? ApplicationComponentOwner)
-            ?.applicationComponent()
-            ?.plusTransactionListComponent()
-            ?.inject(viewModel)
-
         viewModel.transactionsWithCategory().observe(this, Observer<List<TransactionWithCategory>> { transactions ->
-            adapter.items = transactions?.sortedByDescending { it.transaction?.date } ?: emptyList()
-            initStatisticsCards(transactions ?: emptyList())
+            if (transactions?.isNullOrEmpty() == true) {
+                viewModel.setState(ScreenState.LOADING)
+            } else {
+                adapter.items = transactions.sortedByDescending { it.transaction?.date }
+                initStatisticsCards(transactions)
+                viewModel.setState(ScreenState.CONTENT)
+            }
         })
 
         adapter.onItemClickListener = { transaction ->
@@ -68,8 +68,15 @@ class TransactionListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        transition_list.addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.VERTICAL))
         transition_list.adapter = adapter
+        transition_list.addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.VERTICAL))
+        transition_list.addItemDecoration(
+            RecyclerSectionItemDecoration(
+                adapter,
+                R.layout.header_item_transaction_day_summary,
+                sticky = true
+            )
+        )
         add_transaction_fab.setOnClickListener(
             Navigation.createNavigateOnClickListener(R.id.action_transactionListFragment_to_addEditTransactionFragment2)
         )
@@ -85,4 +92,26 @@ class TransactionListFragment : Fragment() {
         }
         initStatisticsCards(adapter.items)
     }
+
+    override fun provideViewModel(): TransactionListViewModel {
+        val viewModel = ViewModelProviders.of(this).get(TransactionListViewModel::class.java)
+        (activity?.application  as? ApplicationComponentOwner)
+            ?.applicationComponent()
+            ?.plusTransactionListComponent()
+            ?.inject(viewModel)
+        return viewModel
+    }
+
+    override fun showLoading() {
+        transaction_list_progress.visible()
+        transaction_list_content.gone()
+    }
+
+    override fun showContent() {
+        transaction_list_content.visible()
+        transaction_list_progress.gone()
+    }
+
+    override fun showError() {}
+    override fun showEmpty() {}
 }

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/Layout.ListItem.StickyHeader">
+    
+    <TextView
+        android:id="@+id/transaction_header_date_text"
+        style="@style/Text.ListItem.Secondary"
+        android:layout_width="0dp"
+        tools:text="12 ноября"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/transaction_header_delta_text"
+        android:layout_marginEnd="16dp"/>
+    
+    <TextView
+        android:id="@+id/transaction_header_delta_text"
+        style="@style/Text.ListItem"
+        android:gravity="end"
+        android:minWidth="120dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:text="-1700,0"/>
+
+</android.support.constraint.ConstraintLayout>

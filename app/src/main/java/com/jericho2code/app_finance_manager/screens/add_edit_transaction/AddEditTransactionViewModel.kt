@@ -5,11 +5,11 @@ import com.jericho2code.app_finance_manager.model.entity.*
 import com.jericho2code.app_finance_manager.model.repositories.CategoryRepository
 import com.jericho2code.app_finance_manager.model.repositories.TemplateRepository
 import com.jericho2code.app_finance_manager.model.repositories.TransactionRepository
-import com.jericho2code.app_finance_manager.utils.BaseViewModel
+import com.jericho2code.app_finance_manager.utils.StateOwnerViewModel
 import org.threeten.bp.LocalDateTime
 import javax.inject.Inject
 
-class AddEditTransactionViewModel : BaseViewModel() {
+class AddEditTransactionViewModel : StateOwnerViewModel() {
 
     @Inject
     lateinit var transactionRepository: TransactionRepository

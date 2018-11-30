@@ -6,39 +6,54 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     
-    
-    <android.support.v4.widget.NestedScrollView
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
         
-        <LinearLayout
-            android:id="@+id/content"
+        <android.support.v4.widget.NestedScrollView
+            android:id="@+id/transaction_list_content"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:visibility="gone"
+            tools:visibility="visible">
             
-            <include layout="@layout/view_transaction_list_header"/>
-            
-            <TextView
-                style="@style/Text.ListItem.Secondary"
-                android:text="@string/last_transaction"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"/>
-            
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/transition_list"
+            <LinearLayout
+                android:id="@+id/content"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/background"
-                app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-                tools:listitem="@layout/list_item_transaction"/>
+                android:orientation="vertical">
+                
+                <include layout="@layout/view_transaction_list_header"/>
+                
+                <TextView
+                    style="@style/Text.ListItem.Secondary"
+                    android:text="@string/last_transaction"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"/>
+                
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/transition_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/background"
+                    app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+                    tools:listitem="@layout/list_item_transaction"/>
+            
+            </LinearLayout>
         
-        </LinearLayout>
+        </android.support.v4.widget.NestedScrollView>
+        
+        <ProgressBar
+            android:id="@+id/transaction_list_progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"/>
     
-    </android.support.v4.widget.NestedScrollView>
+    </FrameLayout>
+    
     
     <android.support.design.bottomappbar.BottomAppBar
         android:id="@+id/bottom_bar"

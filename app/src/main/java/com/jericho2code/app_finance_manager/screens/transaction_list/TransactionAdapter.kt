@@ -10,20 +10,60 @@ import com.jericho2code.app_finance_manager.R
 import com.jericho2code.app_finance_manager.application.extensions.color
 import com.jericho2code.app_finance_manager.application.extensions.drawable
 import com.jericho2code.app_finance_manager.application.extensions.drawableIdByName
+import com.jericho2code.app_finance_manager.application.extensions.toFullDateString
 import com.jericho2code.app_finance_manager.model.entity.TransactionType
 import com.jericho2code.app_finance_manager.model.entity.TransactionWithCategory
 import ru.kinoplan24.app.presentation.utils.adapters.SimpleListAdapter
+import ru.kinoplan24.app.presentation.utils.sticky_headers.StickyHeaderCallback
 
 class TransactionAdapter : SimpleListAdapter<TransactionWithCategory, TransactionAdapter.Holder>({
     R.layout.list_item_transaction
-}) {
-
+}), StickyHeaderCallback<TransactionHeaderItem> {
     var onItemClickListener: ((template: TransactionWithCategory) -> Unit)? = null
 
     override fun onCreateViewHolder(view: View, viewType: Int): Holder = Holder(view)
 
     override fun onBindViewHolder(holder: Holder, item: TransactionWithCategory, position: Int) {
         holder.bind(item, onItemClickListener)
+    }
+
+    override fun hasHeader(position: Int): Boolean {
+        val currentItem = items[position].transaction ?: return false
+        val previousItem = (if (position > 0) items[position - 1].transaction else null) ?: return true
+        return currentItem.date?.dayOfYear?.equals(previousItem.date?.dayOfYear)?.not() == true
+    }
+
+    override fun header(position: Int): TransactionHeaderItem? {
+        return if (hasHeader(position)) {
+            val currentItem = items[position].transaction ?: return null
+            val transactionDayDelta = items.filter { it.transaction?.date?.dayOfYear == currentItem.date?.dayOfYear }
+                .sumByDouble {
+                    val digit = if (it.transaction?.transactionType == TransactionType.SPENDING_TRANSACTION) -1 else 1
+                    (it.transaction?.value ?: 0.0) * digit
+                }
+            TransactionHeaderItem(currentItem.date!!, transactionDayDelta, currentItem.transactionType)
+        } else {
+            null
+        }
+    }
+
+    @SuppressLint("SetTextI18n")
+    override fun bindHeaderView(parentView: View, headerValue: TransactionHeaderItem) {
+        val dateView = parentView.findViewById<TextView>(R.id.transaction_header_date_text)
+        val deltaView = parentView.findViewById<TextView>(R.id.transaction_header_delta_text)
+
+        dateView.text = headerValue.date.toFullDateString()
+        val sing = if (headerValue.dayDelta > 0) "+" else ""
+        deltaView.text = sing + headerValue.dayDelta.toString()
+        deltaView.setTextColor(
+            parentView.context.color(
+                when {
+                    headerValue.dayDelta < 0 -> R.color.spending
+                    headerValue.dayDelta > 0 -> R.color.profit
+                    else -> R.color.list_item_secondary
+                }
+            )
+        )
     }
 
     class Holder(itemView: View) : RecyclerView.ViewHolder(itemView) {
