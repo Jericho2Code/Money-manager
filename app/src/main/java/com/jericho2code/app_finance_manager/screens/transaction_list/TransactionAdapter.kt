@@ -10,7 +10,6 @@ import com.jericho2code.app_finance_manager.R
 import com.jericho2code.app_finance_manager.application.extensions.color
 import com.jericho2code.app_finance_manager.application.extensions.drawable
 import com.jericho2code.app_finance_manager.application.extensions.drawableIdByName
-import com.jericho2code.app_finance_manager.application.extensions.setTextOrHideIfEmpty
 import com.jericho2code.app_finance_manager.model.entity.TransactionType
 import com.jericho2code.app_finance_manager.model.entity.TransactionWithCategory
 import ru.kinoplan24.app.presentation.utils.adapters.SimpleListAdapter
@@ -30,7 +29,7 @@ class TransactionAdapter : SimpleListAdapter<TransactionWithCategory, Transactio
     class Holder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         private val title = itemView.findViewById<TextView>(R.id.transaction_item_title_text)
-        private val description = itemView.findViewById<TextView>(R.id.transaction_item_description_text)
+        private val categoryTitle = itemView.findViewById<TextView>(R.id.transaction_item_category_text)
         private val value = itemView.findViewById<TextView>(R.id.transaction_item_value_text)
         private val imageBackground = itemView.findViewById<View>(R.id.transaction_item_image_background)
         private val categoryIcon = itemView.findViewById<ImageView>(R.id.transaction_item_image_category)
@@ -48,7 +47,6 @@ class TransactionAdapter : SimpleListAdapter<TransactionWithCategory, Transactio
             }
 
             title.text = transaction.title
-            description.setTextOrHideIfEmpty(transaction.description)
             val sign = when (transaction.transactionType) {
                 TransactionType.SPENDING_TRANSACTION -> "-"
                 TransactionType.PROFIT_TRANSACTION -> "+"
@@ -56,7 +54,7 @@ class TransactionAdapter : SimpleListAdapter<TransactionWithCategory, Transactio
             }
 
             category?.let { category ->
-
+                categoryTitle.text = category.title
                 imageBackground.background = GradientDrawable().apply {
                     shape = GradientDrawable.OVAL
                     setColor(category.backgroundColor)
@@ -74,7 +72,6 @@ class TransactionAdapter : SimpleListAdapter<TransactionWithCategory, Transactio
                         TransactionType.SPENDING_TRANSACTION -> R.color.spending
                         TransactionType.PROFIT_TRANSACTION -> R.color.profit
                         TransactionType.TRANSFER_TRANSACTION -> R.color.transfer
-                        else -> R.color.list_item_primary
                     }
                 )
             )

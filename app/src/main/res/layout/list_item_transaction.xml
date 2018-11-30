@@ -24,29 +24,25 @@
         app:layout_constraintEnd_toEndOf="@+id/transaction_item_image_background"/>
     
     <TextView
+        android:id="@+id/transaction_item_category_text"
+        style="@style/Text.ListItem.OverLine"
+        android:layout_width="0dp"
+        tools:text="Аренда жилья"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/transaction_item_title_text"/>
+    
+    <TextView
         android:id="@+id/transaction_item_title_text"
         style="@style/Text.ListItem.Primary.OneLine"
         tools:text="Описание (Заголовок)"
+        android:hint="@string/title_not_exist"
         android:layout_width="0dp"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
         app:layout_constraintStart_toEndOf="@+id/transaction_item_image_background"
         app:layout_constraintEnd_toStartOf="@+id/transaction_item_value_text"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/transaction_item_description_text"
-        app:layout_constraintVertical_chainStyle="spread_inside"/>
-    
-    <TextView
-        android:id="@+id/transaction_item_description_text"
-        style="@style/Text.ListItem.Secondary.TwoLine"
-        android:layout_width="0dp"
-        tools:text="Пояснение на несколько строчек текста и еще чуть чуть текста чтобы точно было 3 строки"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="16dp"
-        app:layout_constraintEnd_toStartOf="@+id/transaction_item_value_text"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/transaction_item_image_background"
-        app:layout_constraintTop_toBottomOf="@+id/transaction_item_title_text"/>
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintTop_toBottomOf="@+id/transaction_item_category_text"/>
     
     <TextView
         android:id="@+id/transaction_item_value_text"

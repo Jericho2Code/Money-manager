@@ -10,7 +10,6 @@ import com.jericho2code.app_finance_manager.R
 import com.jericho2code.app_finance_manager.application.extensions.color
 import com.jericho2code.app_finance_manager.application.extensions.drawable
 import com.jericho2code.app_finance_manager.application.extensions.drawableIdByName
-import com.jericho2code.app_finance_manager.application.extensions.setTextOrHideIfEmpty
 import com.jericho2code.app_finance_manager.model.entity.TemplateFullObject
 import com.jericho2code.app_finance_manager.model.entity.TransactionType
 import ru.kinoplan24.app.presentation.utils.adapters.SimpleListAdapter
@@ -32,7 +31,7 @@ class TemplateAdapter : SimpleListAdapter<TemplateFullObject, TemplateAdapter.Ho
     class Holder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         private val title = itemView.findViewById<TextView>(R.id.transaction_item_title_text)
-        private val description = itemView.findViewById<TextView>(R.id.transaction_item_description_text)
+        private val categoryTitle = itemView.findViewById<TextView>(R.id.transaction_item_category_text)
         private val value = itemView.findViewById<TextView>(R.id.transaction_item_value_text)
         private val imageBackground = itemView.findViewById<View>(R.id.transaction_item_image_background)
         private val categoryIcon = itemView.findViewById<ImageView>(R.id.transaction_item_image_category)
@@ -50,7 +49,6 @@ class TemplateAdapter : SimpleListAdapter<TemplateFullObject, TemplateAdapter.Ho
             }
 
             title.text = transaction?.title ?: ""
-            description.setTextOrHideIfEmpty(transaction?.description)
             val sign = when (transaction?.transactionType) {
                 TransactionType.SPENDING_TRANSACTION -> "-"
                 TransactionType.PROFIT_TRANSACTION -> "+"
@@ -58,7 +56,7 @@ class TemplateAdapter : SimpleListAdapter<TemplateFullObject, TemplateAdapter.Ho
             }
 
             category?.let { category ->
-
+                categoryTitle.text = category.title
                 imageBackground.background = GradientDrawable().apply {
                     shape = GradientDrawable.OVAL
                     setColor(category.backgroundColor)

@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     
-    <!--just for naming-->
-    <style name="Text.ListItem"/>
+    <style name="Text.ListItem">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
     
     <style name="Text.ListItem.Primary">
         <item name="android:textSize">16sp</item>
@@ -13,6 +15,12 @@
     <style name="Text.ListItem.Primary.OneLine">
         <item name="android:maxLines">1</item>
         <item name="android:ellipsize">end</item>
+    </style>
+    
+    <style name="Text.ListItem.OverLine">
+        <item name="android:textColor">@color/list_item_secondary</item>
+        <item name="android:textSize">10sp</item>
+        <item name="android:textAllCaps">true</item>
     </style>
     
     <style name="Text.ListItem.Secondary">

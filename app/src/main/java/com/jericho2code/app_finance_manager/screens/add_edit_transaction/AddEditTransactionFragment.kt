@@ -117,7 +117,6 @@ class AddEditTransactionFragment : Fragment() {
             val transaction = Transaction(
                 value = transition_sum_input.text.toString().toDoubleOrNull() ?: 0.0,
                 title = transition_title_input.text.toString(),
-                description = transition_description_input.text.toString(),
                 date = viewModel.transactionDateLiveData.value ?: LocalDateTime.now(),
                 transactionType = when (operation_type_group.checkedChipId) {
                     R.id.spending -> TransactionType.SPENDING_TRANSACTION
@@ -194,7 +193,6 @@ class AddEditTransactionFragment : Fragment() {
         viewModel.setCategory(category)
         transition_sum_input.setText(transaction.value.toString())
         transition_title_input.setText(transaction.title)
-        transition_description_input.setText(transaction.description)
         viewModel.setTransactionType(transaction.transactionType)
     }
 

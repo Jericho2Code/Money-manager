@@ -19,7 +19,7 @@
             android:orientation="vertical">
             
             <android.support.design.widget.TextInputLayout
-                style="@style/Widget.Shrine.TextInputLayout"
+                style="@style/Widget.TextInputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"

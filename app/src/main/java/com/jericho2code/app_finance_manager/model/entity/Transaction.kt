@@ -14,7 +14,6 @@ class Transaction(
     @PrimaryKey(autoGenerate = true)
     var id: Long? = null,
     var title: String = "",
-    var description: String = "",
     var value: Double = 0.0,
     var date: LocalDateTime? = null,
     var transactionType: TransactionType = TransactionType.SPENDING_TRANSACTION,

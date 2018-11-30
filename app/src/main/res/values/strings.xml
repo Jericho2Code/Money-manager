@@ -44,4 +44,6 @@
     <string name="transaction_save_as_template_subtitle">Шаблоны ускоряют ввод регулярных операций</string>
     <string name="templates">Шаблоны</string>
     <string name="edit_transaction">Изменить операцию</string>
+    <string name="title_not_exist">Название отсутствует</string>
+    <string name="transaction_type">Тип операции</string>
 </resources>
