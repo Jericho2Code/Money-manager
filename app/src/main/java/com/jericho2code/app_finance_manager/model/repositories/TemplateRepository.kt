@@ -20,4 +20,7 @@ class TemplateRepository @Inject constructor(
         .subscribeOn(ioScheduler)
         .observeOn(uiScheduler)
 
+    fun updateTemplate(template: Template): Single<Unit> = Single.fromCallable { templateDao.update(template) }
+        .subscribeOn(ioScheduler)
+        .observeOn(uiScheduler)
 }

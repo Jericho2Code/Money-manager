@@ -13,7 +13,4 @@ interface TransactionDao : BaseDao<Transaction> {
     @android.arch.persistence.room.Transaction
     @Query("SELECT * FROM $TRANSACTION_TABLE WHERE is_template == 0")
     fun transactionsWithCategory(): LiveData<List<TransactionWithCategory>>
-
-    @Update
-    fun update(transaction: Transaction)
 }

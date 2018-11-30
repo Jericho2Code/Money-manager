@@ -3,6 +3,7 @@ package com.jericho2code.app_finance_manager.screens.template_list
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
@@ -34,10 +35,16 @@ class TemplateListFragment : StateFragment<TemplateListViewModel>() {
             }
         })
         adapter.onItemClickListener = { template ->
-            findNavController().navigate(
-                R.id.action_templateListFragment_to_addEditTransactionFragment,
-                AddEditTransactionFragment.createArgs(template)
-            )
+            template.template?.let {
+                viewModel.incrementTemplateUsageCount(it).subscribe({
+                    findNavController().navigate(
+                        R.id.action_templateListFragment_to_addEditTransactionFragment,
+                        AddEditTransactionFragment.createArgs(template)
+                    )
+                }, {
+                    Snackbar.make(view!!, it.localizedMessage, Snackbar.LENGTH_SHORT).show()
+                })
+            }
         }
     }
 

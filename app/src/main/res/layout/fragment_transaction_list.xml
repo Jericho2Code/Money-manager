@@ -54,7 +54,6 @@
     
     </FrameLayout>
     
-    
     <android.support.design.bottomappbar.BottomAppBar
         android:id="@+id/bottom_bar"
         style="@style/Widget.MaterialComponents.BottomAppBar.Colored"
