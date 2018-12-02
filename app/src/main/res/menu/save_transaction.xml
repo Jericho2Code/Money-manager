@@ -3,7 +3,7 @@
     
     <item
         android:id="@+id/save_changes"
-        android:icon="@drawable/ic_check_white"
+        android:icon="@drawable/ic_check"
         android:title="@string/save_changes"
         app:showAsAction="always" />
     

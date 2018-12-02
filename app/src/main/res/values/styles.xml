@@ -1,16 +1,19 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     
-    <style name="AppTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light">
+        <item name="colorPrimary">@color/green_main</item>
+        <item name="colorAccent">@color/green_main</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogTheme</item>
+        <item name="android:statusBarColor">@color/status_bar</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
     </style>
     
     <style name="AppTheme.StartTheme">
-        <item name="android:windowBackground">@drawable/start_background</item>
+        <item name="android:windowBackground">@drawable/preview_window</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
     </style>
     
     <style name="Widget.TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">

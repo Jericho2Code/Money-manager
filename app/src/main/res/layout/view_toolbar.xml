@@ -4,12 +4,15 @@
                                             android:id="@+id/appBarLayout"
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
-                                            android:theme="@style/ThemeOverlay.AppCompat.Dark">
+                                            android:background="@color/white"
+                                            android:elevation="0dp">
     
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_scrollFlags="scroll|enterAlways" />
+        android:background="@null"
+        android:elevation="0dp"
+        app:layout_scrollFlags="scroll|enterAlways"/>
 
 </android.support.design.widget.AppBarLayout>
