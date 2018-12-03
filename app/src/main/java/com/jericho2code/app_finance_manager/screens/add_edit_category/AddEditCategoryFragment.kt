@@ -50,7 +50,6 @@ class AddEditCategoryFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back)
         toolbar.setTitle(R.string.add_category)
-        toolbar.inflateMenu(R.menu.save_category)
         toolbar.setNavigationOnClickListener {
             context?.hideKeyboard(this.view!!)
             findNavController().navigateUp()
@@ -67,7 +66,7 @@ class AddEditCategoryFragment : Fragment() {
 
         setColorViewBackgroundColor(viewModel.backgroundColorLiveData.value)
 
-        toolbar.menu.findItem(R.id.save_changes).setOnMenuItemClickListener {
+        category_save_changes_button.setOnClickListener {
             context?.hideKeyboard(this.view!!)
             viewModel.saveCategory(
                 Category(
@@ -84,7 +83,6 @@ class AddEditCategoryFragment : Fragment() {
                 context?.showToast(R.string.category_saved)
                 findNavController().navigateUp()
             }, {})
-            true
         }
     }
 

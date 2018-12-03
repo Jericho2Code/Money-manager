@@ -3,9 +3,12 @@ package ru.kinoplan24.app.presentation.utils.sticky_headers
 import android.graphics.Canvas
 import android.graphics.Rect
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.jericho2code.app_finance_manager.application.extensions.toFullDateString
+import com.jericho2code.app_finance_manager.screens.transaction_list.TransactionHeaderItem
 
 /**
  *

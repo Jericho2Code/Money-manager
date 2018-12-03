@@ -15,6 +15,7 @@ import com.jericho2code.app_finance_manager.R
 import com.jericho2code.app_finance_manager.application.di.owners.ApplicationComponentOwner
 import com.jericho2code.app_finance_manager.application.extensions.*
 import com.jericho2code.app_finance_manager.model.entity.*
+import com.jericho2code.app_finance_manager.utils.OpenFullScreenListener
 import io.reactivex.Single
 import kotlinx.android.synthetic.main.fragment_add_edit_transaction.*
 import kotlinx.android.synthetic.main.view_toolbar.*
@@ -93,6 +94,7 @@ class AddEditTransactionFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        (activity as? OpenFullScreenListener)?.onScreenOpen()
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back)
         toolbar.setTitle(R.string.add_transaction)
         toolbar.inflateMenu(R.menu.template_menu)
@@ -218,6 +220,7 @@ class AddEditTransactionFragment : Fragment() {
         viewModel.saveAsTemplateVisibilityLiveData.value = null
         viewModel.editTransactionLiveData.value = null
         viewModel.transactionTypeLiveData.value = null
+        (activity as? OpenFullScreenListener)?.onScreenClose()
     }
 
     override fun onPause() {
