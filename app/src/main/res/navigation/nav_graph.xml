@@ -13,10 +13,6 @@
                 app:destination="@id/addEditTransactionFragment"
                 app:enterAnim="@anim/slide_from_bottom"
                 app:popExitAnim="@anim/slide_to_bottom"/>
-        <action android:id="@+id/action_transactionListFragment_to_bottomNavigationDrawerFragment"
-                app:destination="@id/bottomNavigationDrawerFragment"/>
-        <action android:id="@+id/action_transactionListFragment_to_templateListFragment"
-                app:destination="@id/templateListFragment" app:enterAnim="@anim/slide_from_bottom" app:popExitAnim="@anim/slide_to_bottom"/>
     </fragment>
     
     <fragment android:id="@+id/addEditTransactionFragment"
@@ -27,6 +23,8 @@
                 app:destination="@id/selectCategoryFragment"
                 app:enterAnim="@anim/slide_from_left"
                 app:popExitAnim="@anim/slide_to_left"/>
+        <action android:id="@+id/action_addEditTransactionFragment_to_templateListFragment"
+                app:destination="@id/templateListFragment" app:enterAnim="@anim/slide_from_left" app:popExitAnim="@anim/slide_to_left"/>
     </fragment>
     <fragment android:id="@+id/categoryListFragment"
               android:name="com.jericho2code.app_finance_manager.screens.category_list.CategoryListFragment"
@@ -34,15 +32,6 @@
               tools:layout="@layout/fragment_category_list">
         <action android:id="@+id/action_categoryListFragment_to_addEditCategoryFragment"
                 app:destination="@id/addEditCategoryFragment" app:enterAnim="@anim/slide_from_left" app:popExitAnim="@anim/slide_to_left"/>
-    </fragment>
-    <fragment android:id="@+id/bottomNavigationDrawerFragment"
-              android:name="com.jericho2code.app_finance_manager.screens.transaction_list.BottomNavigationDrawerFragment"
-              android:label="BottomNavigationDrawerFragment"
-              tools:layout="@layout/bottom_sheet_fragment_main_menu">
-        <action android:id="@+id/action_bottomNavigationDrawerFragment_to_categoryListFragment"
-                app:destination="@id/categoryListFragment"
-                app:enterAnim="@anim/slide_from_bottom"
-                app:popExitAnim="@anim/slide_to_bottom"/>
     </fragment>
     <fragment android:id="@+id/selectCategoryFragment"
               android:name="com.jericho2code.app_finance_manager.screens.add_edit_transaction.SelectCategoryFragment"
@@ -76,5 +65,9 @@
         <action android:id="@+id/action_templateListFragment_to_addEditTransactionFragment"
                 app:destination="@id/addEditTransactionFragment" app:enterAnim="@anim/slide_from_left" app:popExitAnim="@anim/slide_to_left"/>
     </fragment>
+    <fragment android:id="@+id/analyticsFragment"
+              android:name="com.jericho2code.app_finance_manager.screens.analytics.AnalyticsFragment"
+              android:label="AnalyticsFragment"
+              tools:layout="@layout/fragment_analytics"/>
 
 </navigation>

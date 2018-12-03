@@ -34,7 +34,7 @@
                     tools:text="250"/>
             
             </android.support.design.widget.TextInputLayout>
-    
+            
             <TextView style="@style/Text.ListItem.Primary"
                       android:text="@string/transaction_type"
                       android:layout_marginStart="16dp"/>
@@ -149,6 +149,15 @@
             
             <include android:id="@+id/transaction_save_as_template_field"
                      layout="@layout/view_transaction_save_as_template_item"/>
+            
+            
+            <android.support.design.button.MaterialButton
+                android:id="@+id/transaction_save_changes_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginEnd="16dp"
+                android:text="@string/save"/>
         
         </LinearLayout>
     

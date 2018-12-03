@@ -33,6 +33,11 @@ class AddEditTransactionViewModel : StateOwnerViewModel() {
 
     fun categories() = categoryRepository.categories()
 
+    fun templates() = templateRepository.templates()
+
+    fun incrementTemplateUsageCount(template: Template) =
+        templateRepository.updateTemplate(template.apply { usageCount += 1 })
+
     fun setCategory(category: Category) {
         categoryLiveData.postValue(category)
     }

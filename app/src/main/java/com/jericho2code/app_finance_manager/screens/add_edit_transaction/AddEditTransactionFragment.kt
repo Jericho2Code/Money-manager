@@ -95,11 +95,17 @@ class AddEditTransactionFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back)
         toolbar.setTitle(R.string.add_transaction)
-        toolbar.inflateMenu(R.menu.save_transaction)
+        toolbar.inflateMenu(R.menu.template_menu)
         toolbar.setNavigationOnClickListener {
             context?.hideKeyboard(this.view!!)
             findNavController().navigateUp()
         }
+
+        toolbar.menu.findItem(R.id.templateListFragment).setOnMenuItemClickListener {
+            findNavController().navigate(R.id.action_addEditTransactionFragment_to_templateListFragment)
+            true
+        }
+
         viewModel.transactionTypeLiveData.value?.let {
             updateTransactionTypeSelector(it)
         }
@@ -112,7 +118,8 @@ class AddEditTransactionFragment : Fragment() {
                 }
             )
         }
-        toolbar.menu.findItem(R.id.save_changes).setOnMenuItemClickListener {
+
+        transaction_save_changes_button.setOnClickListener {
             context?.hideKeyboard(this.view!!)
             val transaction = Transaction(
                 value = transition_sum_input.text.toString().toDoubleOrNull() ?: 0.0,
@@ -164,9 +171,8 @@ class AddEditTransactionFragment : Fragment() {
                     Snackbar.make(view, it.localizedMessage, Snackbar.LENGTH_SHORT).show()
                 }
             )
-
-            true
         }
+
         date_selector_input.setOnClickListener {
             val transactionDate = viewModel.transactionDateLiveData.value ?: LocalDateTime.now()
             val datePickerDialog = TransactionDatePickerDialog.instance(transactionDate.toLocalDate())

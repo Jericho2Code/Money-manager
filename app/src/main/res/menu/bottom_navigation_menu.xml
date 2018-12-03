@@ -2,14 +2,13 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
     
     <item
-        android:id="@+id/menu_analytics"
+        android:id="@+id/analyticsFragment"
         android:icon="@drawable/ic_analytics"
         android:title="@string/analytics"/>
     
     <item
-        android:id="@+id/categoryListFragment"
+        android:id="@+id/transactionListFragment"
         android:icon="@drawable/ic_categories"
-        android:title="@string/categories"/>
-    
+        android:title="@string/transactions"/>
 
 </menu>

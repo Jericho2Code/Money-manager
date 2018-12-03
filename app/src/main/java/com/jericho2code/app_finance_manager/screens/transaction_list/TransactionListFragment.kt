@@ -81,15 +81,6 @@ class TransactionListFragment : StateFragment<TransactionListViewModel>() {
             Navigation.createNavigateOnClickListener(R.id.action_transactionListFragment_to_addEditTransactionFragment2)
         )
 
-        bottom_bar.inflateMenu(R.menu.main_menu)
-        bottom_bar.setNavigationOnClickListener {
-            val bottomNavDrawerFragment = BottomNavigationDrawerFragment()
-            bottomNavDrawerFragment.show(childFragmentManager, bottomNavDrawerFragment.tag)
-        }
-        bottom_bar.menu.findItem(R.id.templateListFragment).setOnMenuItemClickListener {
-            findNavController().navigate(R.id.action_transactionListFragment_to_templateListFragment)
-            true
-        }
         initStatisticsCards(adapter.items)
     }
 
@@ -104,19 +95,19 @@ class TransactionListFragment : StateFragment<TransactionListViewModel>() {
 
     override fun showLoading() {
         transaction_list_progress.visible()
-        transaction_list_content.gone()
+        transition_list.gone()
         transaction_list_empty.gone()
     }
 
     override fun showContent() {
-        transaction_list_content.visible()
+        transition_list.visible()
         transaction_list_progress.gone()
         transaction_list_empty.gone()
     }
 
     override fun showError() {}
     override fun showEmpty() {
-        transaction_list_content.visible()
+        transition_list.visible()
         transaction_list_progress.gone()
         transaction_list_empty.visible()
     }

@@ -14,19 +14,19 @@ import com.jericho2code.app_finance_manager.R
 import com.jericho2code.app_finance_manager.application.di.owners.ApplicationComponentOwner
 import com.jericho2code.app_finance_manager.application.extensions.gone
 import com.jericho2code.app_finance_manager.application.extensions.visible
-import com.jericho2code.app_finance_manager.screens.add_edit_transaction.AddEditTransactionFragment
+import com.jericho2code.app_finance_manager.screens.add_edit_transaction.AddEditTransactionViewModel
 import com.jericho2code.app_finance_manager.utils.ScreenState
 import com.jericho2code.app_finance_manager.utils.StateFragment
 import kotlinx.android.synthetic.main.fragment_template_list.*
 import kotlinx.android.synthetic.main.view_toolbar.*
 
-class TemplateListFragment : StateFragment<TemplateListViewModel>() {
+class TemplateListFragment : StateFragment<AddEditTransactionViewModel>() {
 
     private val adapter: TemplateAdapter = TemplateAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel.templates().observe(this, Observer { templates ->
+        viewModel.templates().observe(activity!!, Observer { templates ->
             if (templates?.isNullOrEmpty() == true) {
                 viewModel.setState(ScreenState.EMPTY)
             } else {
@@ -37,10 +37,8 @@ class TemplateListFragment : StateFragment<TemplateListViewModel>() {
         adapter.onItemClickListener = { template ->
             template.template?.let {
                 viewModel.incrementTemplateUsageCount(it).subscribe({
-                    findNavController().navigate(
-                        R.id.action_templateListFragment_to_addEditTransactionFragment,
-                        AddEditTransactionFragment.createArgs(template)
-                    )
+                    viewModel.setTemplate(template)
+                    findNavController().popBackStack()
                 }, {
                     Snackbar.make(view!!, it.localizedMessage, Snackbar.LENGTH_SHORT).show()
                 })
@@ -65,11 +63,11 @@ class TemplateListFragment : StateFragment<TemplateListViewModel>() {
         template_list.adapter = adapter
     }
 
-    override fun provideViewModel(): TemplateListViewModel {
-        val viewModel = ViewModelProviders.of(this).get(TemplateListViewModel::class.java)
+    override fun provideViewModel(): AddEditTransactionViewModel {
+        val viewModel = ViewModelProviders.of(activity!!).get(AddEditTransactionViewModel::class.java)
         (activity?.application  as? ApplicationComponentOwner)
             ?.applicationComponent()
-            ?.plusTemplateListComponent()
+            ?.plusTransactionAddEditComponent()
             ?.inject(viewModel)
         return viewModel
     }
