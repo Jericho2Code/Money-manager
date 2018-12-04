@@ -25,7 +25,7 @@
     
     <TextView
         android:id="@+id/transaction_item_category_text"
-        style="@style/Text.ListItem.OverLine"
+        style="@style/Text.ListItem.Primary"
         android:layout_width="0dp"
         tools:text="Аренда жилья"
         app:layout_constraintTop_toTopOf="parent"
@@ -33,9 +33,9 @@
     
     <TextView
         android:id="@+id/transaction_item_title_text"
-        style="@style/Text.ListItem.Primary.OneLine"
+        style="@style/Text.ListItem.Secondary"
         tools:text="Описание (Заголовок)"
-        android:hint="@string/title_not_exist"
+        android:hint="@string/description_not_exist"
         android:layout_width="0dp"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"

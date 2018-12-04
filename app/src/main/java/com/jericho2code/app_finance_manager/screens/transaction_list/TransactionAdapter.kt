@@ -58,7 +58,7 @@ class TransactionAdapter : SimpleListAdapter<TransactionWithCategory, Transactio
         deltaView.setTextColor(
             parentView.context.color(
                 when {
-                    headerValue.dayDelta < 0 -> R.color.spending
+                    headerValue.dayDelta < 0 -> R.color.spending_grey
                     headerValue.dayDelta > 0 -> R.color.profit
                     else -> R.color.list_item_secondary
                 }
@@ -109,7 +109,7 @@ class TransactionAdapter : SimpleListAdapter<TransactionWithCategory, Transactio
             value.setTextColor(
                 context.color(
                     when (transaction.transactionType) {
-                        TransactionType.SPENDING_TRANSACTION -> R.color.spending
+                        TransactionType.SPENDING_TRANSACTION -> R.color.spending_grey
                         TransactionType.PROFIT_TRANSACTION -> R.color.profit
                         TransactionType.TRANSFER_TRANSACTION -> R.color.transfer
                     }

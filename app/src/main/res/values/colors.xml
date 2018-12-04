@@ -33,6 +33,7 @@
     <color name="list_item_secondary">#99000000</color>
     <color name="list_item_primary">#de000000</color>
     
+    <color name="spending_grey">#757575</color>
     
     <color name="base_category_food">#FFE91E63</color>
     <color name="base_category_passage">#FF2196F3</color>
