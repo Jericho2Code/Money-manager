@@ -14,60 +14,62 @@ import com.jericho2code.app_finance_manager.application.extensions.toFullDateStr
 import com.jericho2code.app_finance_manager.model.entity.TransactionType
 import com.jericho2code.app_finance_manager.model.entity.TransactionWithCategory
 import ru.kinoplan24.app.presentation.utils.adapters.SimpleListAdapter
-import ru.kinoplan24.app.presentation.utils.sticky_headers.StickyHeaderCallback
 
-class TransactionAdapter : SimpleListAdapter<TransactionWithCategory, TransactionAdapter.Holder>({
-    R.layout.list_item_transaction
-}), StickyHeaderCallback<TransactionHeaderItem> {
+class TransactionAdapter : SimpleListAdapter<TransactionListItem, RecyclerView.ViewHolder>({ viewType ->
+    when (viewType) {
+        REGULAR_ITEM -> R.layout.list_item_transaction
+        HEADER_ITEM -> R.layout.list_item_transaction_header_day_summary
+        else -> R.layout.list_item_transaction
+    }
+}) {
+
+    companion object {
+        const val REGULAR_ITEM = 0
+        const val HEADER_ITEM = 1
+    }
+
     var onItemClickListener: ((template: TransactionWithCategory) -> Unit)? = null
 
-    override fun onCreateViewHolder(view: View, viewType: Int): Holder = Holder(view)
-
-    override fun onBindViewHolder(holder: Holder, item: TransactionWithCategory, position: Int) {
-        holder.bind(item, onItemClickListener)
+    override fun onCreateViewHolder(view: View, viewType: Int): RecyclerView.ViewHolder = when (viewType) {
+        REGULAR_ITEM -> RegularItemHolder(view)
+        HEADER_ITEM -> HeaderItemHolder(view)
+        else -> RegularItemHolder(view)
     }
 
-    override fun hasHeader(position: Int): Boolean {
-        val currentItem = items[position].transaction ?: return false
-        val previousItem = (if (position > 0) items[position - 1].transaction else null) ?: return true
-        return currentItem.date?.dayOfYear?.equals(previousItem.date?.dayOfYear)?.not() == true
+
+    override fun getItemViewType(position: Int): Int = when (items[position]) {
+        is TransactionRegularListItem -> REGULAR_ITEM
+        is TransactionHeaderListItem -> HEADER_ITEM
     }
 
-    override fun header(position: Int): TransactionHeaderItem? {
-        return if (hasHeader(position)) {
-            val currentItem = items[position].transaction ?: return null
-            val transactionDayDelta = items.filter { it.transaction?.date?.dayOfYear == currentItem.date?.dayOfYear }
-                .sumByDouble {
-                    val digit = if (it.transaction?.transactionType == TransactionType.SPENDING_TRANSACTION) -1 else 1
-                    (it.transaction?.value ?: 0.0) * digit
-                }
-            TransactionHeaderItem(currentItem.date!!, transactionDayDelta, currentItem.transactionType)
-        } else {
-            null
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, item: TransactionListItem, position: Int) {
+        when (holder) {
+            is RegularItemHolder -> holder.bind(item as TransactionRegularListItem, onItemClickListener)
+            is HeaderItemHolder -> holder.bind(item as TransactionHeaderListItem)
         }
     }
 
-    @SuppressLint("SetTextI18n")
-    override fun bindHeaderView(parentView: View, headerValue: TransactionHeaderItem) {
-        val dateView = parentView.findViewById<TextView>(R.id.transaction_header_date_text)
-        val deltaView = parentView.findViewById<TextView>(R.id.transaction_header_delta_text)
+    class HeaderItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private val dateView = itemView.findViewById<TextView>(R.id.transaction_header_date_text)
+        private val deltaView = itemView.findViewById<TextView>(R.id.transaction_header_delta_text)
 
-        dateView.text = headerValue.date.toFullDateString()
-        val sing = if (headerValue.dayDelta > 0) "+" else ""
-        deltaView.text = sing + headerValue.dayDelta.toString()
-        deltaView.setTextColor(
-            parentView.context.color(
-                when {
-                    headerValue.dayDelta < 0 -> R.color.spending_grey
-                    headerValue.dayDelta > 0 -> R.color.profit
-                    else -> R.color.list_item_secondary
-                }
+        fun bind(item: TransactionHeaderListItem) {
+            dateView.text = item.date.toFullDateString()
+            val sing = if (item.dayDelta > 0) "+" else ""
+            deltaView.text = sing + item.dayDelta.toString()
+            deltaView.setTextColor(
+                itemView.context.color(
+                    when {
+                        item.dayDelta < 0 -> R.color.spending_grey
+                        item.dayDelta > 0 -> R.color.profit
+                        else -> R.color.list_item_secondary
+                    }
+                )
             )
-        )
+        }
     }
 
-    class Holder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
+    class RegularItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val title = itemView.findViewById<TextView>(R.id.transaction_item_title_text)
         private val categoryTitle = itemView.findViewById<TextView>(R.id.transaction_item_category_text)
         private val value = itemView.findViewById<TextView>(R.id.transaction_item_value_text)
@@ -75,14 +77,17 @@ class TransactionAdapter : SimpleListAdapter<TransactionWithCategory, Transactio
         private val categoryIcon = itemView.findViewById<ImageView>(R.id.transaction_item_image_category)
 
         @SuppressLint("ResourceAsColor")
-        fun bind(item: TransactionWithCategory, onItemClickListener: ((template: TransactionWithCategory) -> Unit)?) {
+        fun bind(
+            item: TransactionRegularListItem,
+            onItemClickListener: ((template: TransactionWithCategory) -> Unit)?
+        ) {
             val context = itemView.context
-            val transaction = item.transaction!!
-            val category = item.category.firstOrNull()
+            val transaction = item.transaction.transaction!!
+            val category = item.transaction.category.firstOrNull()
 
             onItemClickListener?.let { onClick ->
                 itemView.setOnClickListener {
-                    onClick(item)
+                    onClick(item.transaction)
                 }
             }
 

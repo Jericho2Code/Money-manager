@@ -3,8 +3,6 @@ package com.jericho2code.app_finance_manager.screens.transaction_list
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.support.v7.widget.DividerItemDecoration
-import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,7 +19,6 @@ import com.jericho2code.app_finance_manager.utils.ScreenState
 import com.jericho2code.app_finance_manager.utils.StateFragment
 import kotlinx.android.synthetic.main.fragment_transaction_list.*
 import kotlinx.android.synthetic.main.view_transaction_list_header.*
-import ru.kinoplan24.app.presentation.utils.sticky_headers.RecyclerSectionItemDecoration
 
 
 class TransactionListFragment : StateFragment<TransactionListViewModel>() {
@@ -34,7 +31,26 @@ class TransactionListFragment : StateFragment<TransactionListViewModel>() {
             if (transactions?.isNullOrEmpty() == true) {
                 viewModel.setState(ScreenState.EMPTY)
             } else {
-                adapter.items = transactions.sortedByDescending { it.transaction?.date }
+                val listItems =
+                    transactions.sortedByDescending { it.transaction?.date }.groupBy { it.transaction?.date?.dayOfYear }
+                        .map { (_, transactions) ->
+                            val transactionDayDelta = transactions.sumByDouble {
+                                val digit =
+                                    if (it.transaction?.transactionType == TransactionType.SPENDING_TRANSACTION) -1 else 1
+                                (it.transaction?.value ?: 0.0) * digit
+                            }
+                            val date = transactions.first().transaction?.date!!
+                            val transactionType = transactions.first().transaction!!.transactionType
+                            val sortedTransactions = transactions.map { TransactionRegularListItem(it) }
+                            listOf(
+                                TransactionHeaderListItem(
+                                    date,
+                                    transactionDayDelta,
+                                    transactionType
+                                )
+                            ) + sortedTransactions
+                        }.flatten()
+                adapter.items = listItems
                 initStatisticsCards(transactions)
                 viewModel.setState(ScreenState.CONTENT)
             }
@@ -69,19 +85,12 @@ class TransactionListFragment : StateFragment<TransactionListViewModel>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         transition_list.adapter = adapter
-        transition_list.addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.VERTICAL))
-        transition_list.addItemDecoration(
-            RecyclerSectionItemDecoration(
-                adapter,
-                R.layout.header_item_transaction_day_summary,
-                sticky = true
-            )
-        )
+
         add_transaction_fab.setOnClickListener(
             Navigation.createNavigateOnClickListener(R.id.action_transactionListFragment_to_addEditTransactionFragment2)
         )
 
-        initStatisticsCards(adapter.items)
+        initStatisticsCards(adapter.items.filter { it is TransactionRegularListItem }.map { (it as TransactionRegularListItem).transaction })
     }
 
     override fun provideViewModel(): TransactionListViewModel {

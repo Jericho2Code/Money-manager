@@ -3,32 +3,31 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent" android:layout_height="match_parent">
     
-    <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:elevation="0dp">
-        
-        <include
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            layout="@layout/view_transaction_list_header"
-            app:layout_scrollFlags="scroll|enterAlways"/>
-    
-    </android.support.design.widget.AppBarLayout>
-    
-    
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/transition_list"
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/background"
-        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:listitem="@layout/list_item_transaction"/>
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            
+            <include layout="@layout/view_transaction_list_header" />
+            
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/transition_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/background"
+                app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+                tools:listitem="@layout/list_item_transaction"/>
+        
+        </LinearLayout>
+    
+    </android.support.v4.widget.NestedScrollView>
     
     <ProgressBar
         android:id="@+id/transaction_list_progress"
