@@ -20,10 +20,13 @@ class Transaction(
     @ColumnInfo(name = "category_id")
     var categoryId: Long? = null,
     @ColumnInfo(name = "is_template")
-    var isTemplate: Boolean = false
+    var isTemplate: Boolean = false,
+    @ColumnInfo(name = ACCOUNT_ID)
+    var accountId: Long
 ): Parcelable {
     companion object {
         const val TRANSACTION_TABLE = "transaction_table"
         const val ID = "id"
+        const val ACCOUNT_ID = "account_id"
     }
 }

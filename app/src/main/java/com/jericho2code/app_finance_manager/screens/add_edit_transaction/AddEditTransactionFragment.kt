@@ -24,10 +24,12 @@ import org.threeten.bp.LocalDateTime
 
 class AddEditTransactionFragment : Fragment() {
 
-    lateinit var viewModel: AddEditTransactionViewModel
+    private lateinit var viewModel: AddEditTransactionViewModel
+    private var accountId: Long? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        accountId = arguments?.getLong(CURRENT_ACCOUNT_ID)
         viewModel = ViewModelProviders.of(activity!!).get(AddEditTransactionViewModel::class.java)
         (activity?.application  as? ApplicationComponentOwner)
             ?.applicationComponent()
@@ -132,7 +134,8 @@ class AddEditTransactionFragment : Fragment() {
                     R.id.profit -> TransactionType.PROFIT_TRANSACTION
                     else -> TransactionType.SPENDING_TRANSACTION
                 },
-                categoryId = viewModel.categoryLiveData.value?.id ?: 0
+                categoryId = viewModel.categoryLiveData.value?.id ?: 0,
+                accountId = accountId ?: 0
             )
 
             (viewModel.editTransactionLiveData.value?.let {
@@ -231,13 +234,20 @@ class AddEditTransactionFragment : Fragment() {
     companion object {
         const val TEMPLATE = "template"
         const val TRANSACTION = "transaction"
+        const val CURRENT_ACCOUNT_ID = "current_account_id"
 
-        fun createArgs(template: TemplateFullObject) = Bundle().apply {
-            putParcelable(TEMPLATE, template)
+        fun createArgs(accountId: Long) = Bundle().apply {
+            putLong(CURRENT_ACCOUNT_ID, accountId)
         }
 
-        fun createArgs(transaction: TransactionWithCategory) = Bundle().apply {
+        fun createArgs(accountId: Long, template: TemplateFullObject) = Bundle().apply {
+            putParcelable(TEMPLATE, template)
+            putLong(CURRENT_ACCOUNT_ID, accountId)
+        }
+
+        fun createArgs(accountId: Long, transaction: TransactionWithCategory) = Bundle().apply {
             putParcelable(TRANSACTION, transaction)
+            putLong(CURRENT_ACCOUNT_ID, accountId)
         }
     }
 }

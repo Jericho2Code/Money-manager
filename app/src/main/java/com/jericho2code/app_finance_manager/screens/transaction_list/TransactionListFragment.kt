@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.jericho2code.app_finance_manager.R
 import com.jericho2code.app_finance_manager.application.di.owners.ApplicationComponentOwner
@@ -27,8 +26,22 @@ class TransactionListFragment : StateFragment<TransactionListViewModel>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel.transactionsWithCategory().observe(this, Observer<List<TransactionWithCategory>> { transactions ->
-            if (transactions?.isNullOrEmpty() == true) {
+        viewModel.updateAccounts().observe(this, Observer { accounts ->
+            accounts?.let {
+                if (viewModel.currentAccountLiveData.value == null) {
+                    viewModel.setCurrentAccount(accounts.first())
+                }
+            }
+        })
+        viewModel.currentAccountLiveData.observe(this, Observer { account ->
+            account?.let {
+                viewModel.updateTransactions(it).observe(this, Observer {
+                    viewModel.transactionsLiveDate.postValue(it ?: emptyList())
+                })
+            }
+        })
+        viewModel.transactionsLiveDate.observe(this, Observer { transactions ->
+            if (transactions.isNullOrEmpty()) {
                 viewModel.setState(ScreenState.EMPTY)
             } else {
                 val listItems =
@@ -59,9 +72,12 @@ class TransactionListFragment : StateFragment<TransactionListViewModel>() {
         adapter.onItemClickListener = { transaction ->
             findNavController().navigate(
                 R.id.action_transactionListFragment_to_addEditTransactionFragment2,
-                AddEditTransactionFragment.createArgs(transaction)
+                viewModel.currentAccountLiveData.value?.id?.let { accountId ->
+                    AddEditTransactionFragment.createArgs(accountId, transaction)
+                }
             )
         }
+
     }
 
     private fun initStatisticsCards(transactions: List<TransactionWithCategory>) {
@@ -86,9 +102,12 @@ class TransactionListFragment : StateFragment<TransactionListViewModel>() {
         super.onViewCreated(view, savedInstanceState)
         transition_list.adapter = adapter
 
-        add_transaction_fab.setOnClickListener(
-            Navigation.createNavigateOnClickListener(R.id.action_transactionListFragment_to_addEditTransactionFragment2)
-        )
+        add_transaction_fab.setOnClickListener {
+            findNavController().navigate(R.id.action_transactionListFragment_to_addEditTransactionFragment2,
+                viewModel.currentAccountLiveData.value?.id?.let { accountId ->
+                    AddEditTransactionFragment.createArgs(accountId)
+                })
+        }
 
         initStatisticsCards(adapter.items.filter { it is TransactionRegularListItem }.map { (it as TransactionRegularListItem).transaction })
     }

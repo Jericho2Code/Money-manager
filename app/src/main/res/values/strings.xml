@@ -50,4 +50,5 @@
     <string name="template_not_found">Шаблоны не найдены</string>
     <string name="category_not_found">Категории не найдены</string>
     <string name="transactions">Операции</string>
+    <string name="base_account">Базовый аккаунт</string>
 </resources>
