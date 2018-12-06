@@ -19,7 +19,6 @@ import com.jericho2code.app_finance_manager.utils.StateFragment
 import kotlinx.android.synthetic.main.fragment_category_list.*
 import kotlinx.android.synthetic.main.view_toolbar.*
 
-
 class CategoryListFragment : StateFragment<CategoryListViewModel>() {
     private val adapter = CategoryAdapter()
 
@@ -33,6 +32,7 @@ class CategoryListFragment : StateFragment<CategoryListViewModel>() {
                 viewModel.setState(ScreenState.CONTENT)
             }
         })
+
     }
 
     override fun onCreateView(

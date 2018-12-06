@@ -79,10 +79,9 @@ class AddEditCategoryFragment : Fragment() {
                     backgroundColor = viewModel.backgroundColorLiveData.value ?: context!!.color(R.color.icon_grey),
                     iconIdName = context?.nameForId(viewModel.iconIdLiveData.value ?: R.drawable.ic_money)
                 )
-            ).subscribe({
-                context?.showToast(R.string.category_saved)
-                findNavController().navigateUp()
-            }, {})
+            )
+            context?.showToast(R.string.category_saved)
+            findNavController().navigateUp()
         }
     }
 

@@ -18,15 +18,19 @@ import com.jericho2code.app_finance_manager.utils.ScreenState
 import com.jericho2code.app_finance_manager.utils.StateFragment
 import kotlinx.android.synthetic.main.fragment_transaction_list.*
 import kotlinx.android.synthetic.main.view_transaction_list_header.*
+import javax.inject.Inject
 
 
 class TransactionListFragment : StateFragment<TransactionListViewModel>() {
+
+    @Inject
+    lateinit var viewModelFactory: TransactionListViewModelFactory
 
     private var adapter = TransactionAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel.updateAccounts().observe(this, Observer { accounts ->
+        viewModel.accountsLiveData.observe(this, Observer { accounts ->
             accounts?.let {
                 if (viewModel.currentAccountLiveData.value == null) {
                     viewModel.setCurrentAccount(accounts.first())
@@ -35,37 +39,34 @@ class TransactionListFragment : StateFragment<TransactionListViewModel>() {
         })
         viewModel.currentAccountLiveData.observe(this, Observer { account ->
             account?.let {
-                viewModel.updateTransactions(it).observe(this, Observer {
-                    viewModel.transactionsLiveDate.postValue(it ?: emptyList())
+                viewModel.updateTransactions(it).observe(this, Observer { transactions ->
+                    if (transactions.isNullOrEmpty()) {
+                        viewModel.setState(ScreenState.EMPTY)
+                    } else {
+                        val listItems =
+                            transactions.sortedByDescending { it.transaction?.date }.groupBy { it.transaction?.date?.dayOfYear }
+                                .map { (_, transactions) ->
+                                    val transactionDayDelta = transactions.sumByDouble {
+                                        val digit =
+                                            if (it.transaction?.transactionType == TransactionType.SPENDING_TRANSACTION) -1 else 1
+                                        (it.transaction?.value ?: 0.0) * digit
+                                    }
+                                    val date = transactions.first().transaction?.date!!
+                                    val transactionType = transactions.first().transaction!!.transactionType
+                                    val sortedTransactions = transactions.map { TransactionRegularListItem(it) }
+                                    listOf(
+                                        TransactionHeaderListItem(
+                                            date,
+                                            transactionDayDelta,
+                                            transactionType
+                                        )
+                                    ) + sortedTransactions
+                                }.flatten()
+                        adapter.items = listItems
+                        initStatisticsCards(transactions)
+                        viewModel.setState(ScreenState.CONTENT)
+                    }
                 })
-            }
-        })
-        viewModel.transactionsLiveDate.observe(this, Observer { transactions ->
-            if (transactions.isNullOrEmpty()) {
-                viewModel.setState(ScreenState.EMPTY)
-            } else {
-                val listItems =
-                    transactions.sortedByDescending { it.transaction?.date }.groupBy { it.transaction?.date?.dayOfYear }
-                        .map { (_, transactions) ->
-                            val transactionDayDelta = transactions.sumByDouble {
-                                val digit =
-                                    if (it.transaction?.transactionType == TransactionType.SPENDING_TRANSACTION) -1 else 1
-                                (it.transaction?.value ?: 0.0) * digit
-                            }
-                            val date = transactions.first().transaction?.date!!
-                            val transactionType = transactions.first().transaction!!.transactionType
-                            val sortedTransactions = transactions.map { TransactionRegularListItem(it) }
-                            listOf(
-                                TransactionHeaderListItem(
-                                    date,
-                                    transactionDayDelta,
-                                    transactionType
-                                )
-                            ) + sortedTransactions
-                        }.flatten()
-                adapter.items = listItems
-                initStatisticsCards(transactions)
-                viewModel.setState(ScreenState.CONTENT)
             }
         })
 
@@ -77,7 +78,6 @@ class TransactionListFragment : StateFragment<TransactionListViewModel>() {
                 }
             )
         }
-
     }
 
     private fun initStatisticsCards(transactions: List<TransactionWithCategory>) {
@@ -113,12 +113,12 @@ class TransactionListFragment : StateFragment<TransactionListViewModel>() {
     }
 
     override fun provideViewModel(): TransactionListViewModel {
-        val viewModel = ViewModelProviders.of(this).get(TransactionListViewModel::class.java)
         (activity?.application  as? ApplicationComponentOwner)
             ?.applicationComponent()
             ?.plusTransactionListComponent()
-            ?.inject(viewModel)
-        return viewModel
+            ?.inject(this)
+
+        return ViewModelProviders.of(this, viewModelFactory).get(TransactionListViewModel::class.java)
     }
 
     override fun showLoading() {
