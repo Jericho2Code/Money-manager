@@ -14,29 +14,39 @@ import com.jericho2code.app_finance_manager.R
 import com.jericho2code.app_finance_manager.application.di.owners.ApplicationComponentOwner
 import com.jericho2code.app_finance_manager.application.extensions.gone
 import com.jericho2code.app_finance_manager.application.extensions.visible
+import com.jericho2code.app_finance_manager.model.entity.Category
 import com.jericho2code.app_finance_manager.screens.category_list.CategoryAdapter
-import com.jericho2code.app_finance_manager.utils.ScreenState
-import com.jericho2code.app_finance_manager.utils.StateFragment
+import com.jericho2code.app_finance_manager.screens.category_list.CategoryListViewModel
+import com.jericho2code.app_finance_manager.utils.*
 import kotlinx.android.synthetic.main.fragment_category_list.*
 import kotlinx.android.synthetic.main.view_toolbar.*
+import javax.inject.Inject
 
-class SelectCategoryFragment : StateFragment<AddEditTransactionViewModel>() {
-
+class SelectCategoryFragment : StateFragment<CategoryListViewModel>() {
+    @Inject
+    lateinit var viewModelFactory: TransactionAddEditViewModelFactory
+    lateinit var sharedViewModel: AddEditTransactionViewModel
     private val adapter = CategoryAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        (activity?.application  as? ApplicationComponentOwner)
+            ?.applicationComponent()
+            ?.plusTransactionAddEditComponent()
+            ?.inject(this)
+        sharedViewModel = ViewModelProviders.of(activity!!, viewModelFactory).get(AddEditTransactionViewModel::class.java)
+
+
         viewModel.categories().observe(this, Observer { categories ->
             if (categories?.isNullOrEmpty() == true) {
-                viewModel.setState(ScreenState.EMPTY)
+                viewModel.setState(EmptyState())
             } else {
-                adapter.items = categories.sortedBy { it.title }
-                viewModel.setState(ScreenState.CONTENT)
+                viewModel.setState(ContentState(categories.sortedBy { it.title }))
             }
         })
         adapter.onItemClickListener = {
-            viewModel.setCategory(it)
+            sharedViewModel.setCategory(it)
             findNavController().navigateUp()
         }
     }
@@ -63,28 +73,38 @@ class SelectCategoryFragment : StateFragment<AddEditTransactionViewModel>() {
 
     }
 
-    override fun provideViewModel(): AddEditTransactionViewModel {
-        val viewModel = ViewModelProviders.of(activity!!).get(AddEditTransactionViewModel::class.java)
+    override fun provideViewModel(): CategoryListViewModel {
+        val viewModel = ViewModelProviders.of(activity!!).get(CategoryListViewModel::class.java)
         (activity?.application  as? ApplicationComponentOwner)
             ?.applicationComponent()
-            ?.plusTransactionAddEditComponent()
+            ?.plusCategoryListComponent()
             ?.inject(viewModel)
         return viewModel
     }
 
-    override fun showLoading() {
+    override fun onStateChange(state: State) {
+        when (state) {
+            is LoadingState -> showLoading()
+            is ContentState<*> -> {
+                val contentValue = (state as? ContentState<List<Category>>)?.value
+                contentValue?.let { showContent(it) }
+            }
+            is EmptyState -> showEmpty()
+        }
+    }
+
+    private fun showLoading() {
         category_list_progress.visible()
         category_list.gone()
     }
 
-    override fun showContent() {
+    private fun showContent(content: List<Category>) {
+        adapter.items = content
         category_list_progress.gone()
         category_list.visible()
     }
 
-    override fun showError() {}
-
-    override fun showEmpty() {
+    private fun showEmpty() {
         category_list_empty.visible()
         category_list_progress.gone()
         category_list.gone()

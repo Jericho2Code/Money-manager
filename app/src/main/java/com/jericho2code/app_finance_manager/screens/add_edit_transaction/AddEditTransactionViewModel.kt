@@ -5,18 +5,15 @@ import com.jericho2code.app_finance_manager.model.entity.*
 import com.jericho2code.app_finance_manager.model.repositories.CategoryRepository
 import com.jericho2code.app_finance_manager.model.repositories.TemplateRepository
 import com.jericho2code.app_finance_manager.model.repositories.TransactionRepository
+import com.jericho2code.app_finance_manager.utils.LoadingState
 import com.jericho2code.app_finance_manager.utils.StateOwnerViewModel
+import kotlinx.coroutines.launch
 import org.threeten.bp.LocalDateTime
-import javax.inject.Inject
 
-class AddEditTransactionViewModel : StateOwnerViewModel() {
-
-    @Inject
-    lateinit var transactionRepository: TransactionRepository
-    @Inject
-    lateinit var categoryRepository: CategoryRepository
-    @Inject
-    lateinit var templateRepository: TemplateRepository
+class AddEditTransactionViewModel(
+    private val transactionRepository: TransactionRepository,
+    private val templateRepository: TemplateRepository
+) : StateOwnerViewModel() {
 
     var categoryLiveData = MutableLiveData<Category>()
     var transactionDateLiveData = MutableLiveData<LocalDateTime>()
@@ -25,18 +22,47 @@ class AddEditTransactionViewModel : StateOwnerViewModel() {
     var editTransactionLiveData = MutableLiveData<TransactionWithCategory>()
     var transactionTypeLiveData = MutableLiveData<TransactionType>()
 
-    fun saveTransaction(transaction: Transaction) = transactionRepository.saveTransaction(transaction)
+    fun saveTransaction(transaction: Transaction, useAsTemplate: Boolean) {
+        scope.launch {
+            transactionRepository.saveTransaction(transaction)
+            if (useAsTemplate) {
+                saveTemplate(transaction)
+            }
+            setState(AddEditTransactionFragment.SavedState())
+        }
+    }
 
-    fun updateTransaction(transaction: Transaction) = transactionRepository.updateTransaction(transaction)
+    fun updateTransaction(transaction: Transaction, useAsTemplate: Boolean) {
+        scope.launch {
+            setState(LoadingState())
+            transactionRepository.updateTransaction(transaction)
+            if (useAsTemplate) {
+                saveTemplate(transaction)
+            }
+            setState(AddEditTransactionFragment.SavedState())
+        }
+    }
 
-    fun saveTemplate(template: Template) = templateRepository.saveTemplate(template)
+    private suspend fun saveTemplate(transaction: Transaction) {
+        val templateTransactionId = transactionRepository.saveTransaction(
+            transaction.apply {
+                id = null
+                isTemplate = true
+            }
+        )
+        val template = Template(
+            usageCount = 1,
+            transactionId = templateTransactionId,
+            categoryId = categoryLiveData.value?.id ?: 0
+        )
+        templateRepository.saveTemplate(template)
+    }
 
-    fun categories() = categoryRepository.categories()
-
-    fun templates() = templateRepository.templates()
-
-    fun incrementTemplateUsageCount(template: Template) =
-        templateRepository.updateTemplate(template.apply { usageCount += 1 })
+    fun incrementTemplateUsageCount(template: Template) {
+        scope.launch {
+            templateRepository.updateTemplate(template.apply { usageCount += 1 })
+        }
+    }
 
     fun setCategory(category: Category) {
         categoryLiveData.postValue(category)

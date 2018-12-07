@@ -19,5 +19,5 @@ interface ApplicationComponent {
     fun plusCategoryListComponent(): CategoryListComponent
     fun plusCategoryAddEditComponent(): CategoryAddEditComponent
     fun plusTransactionAddEditComponent(): TransactionAddEditComponent
+    fun plusTemplateListComponent(): TemplateListComponent
 }
-

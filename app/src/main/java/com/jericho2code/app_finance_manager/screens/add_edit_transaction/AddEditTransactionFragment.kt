@@ -4,8 +4,6 @@ import android.annotation.SuppressLint
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.support.design.widget.Snackbar
-import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,26 +13,25 @@ import com.jericho2code.app_finance_manager.R
 import com.jericho2code.app_finance_manager.application.di.owners.ApplicationComponentOwner
 import com.jericho2code.app_finance_manager.application.extensions.*
 import com.jericho2code.app_finance_manager.model.entity.*
+import com.jericho2code.app_finance_manager.utils.LoadingState
 import com.jericho2code.app_finance_manager.utils.OpenFullScreenListener
-import io.reactivex.Single
+import com.jericho2code.app_finance_manager.utils.State
+import com.jericho2code.app_finance_manager.utils.StateFragment
 import kotlinx.android.synthetic.main.fragment_add_edit_transaction.*
 import kotlinx.android.synthetic.main.view_toolbar.*
 import kotlinx.android.synthetic.main.view_transaction_save_as_template_item.*
 import org.threeten.bp.LocalDateTime
+import javax.inject.Inject
 
-class AddEditTransactionFragment : Fragment() {
+class AddEditTransactionFragment : StateFragment<AddEditTransactionViewModel>() {
 
-    private lateinit var viewModel: AddEditTransactionViewModel
+    @Inject
+    lateinit var viewModelFactory: TransactionAddEditViewModelFactory
     private var accountId: Long? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         accountId = arguments?.getLong(CURRENT_ACCOUNT_ID)
-        viewModel = ViewModelProviders.of(activity!!).get(AddEditTransactionViewModel::class.java)
-        (activity?.application  as? ApplicationComponentOwner)
-            ?.applicationComponent()
-            ?.plusTransactionAddEditComponent()
-            ?.inject(viewModel)
         viewModel.categoryLiveData.observe(this, Observer { category ->
             transition_category_input.setText(category?.title ?: "")
             val isNotTemplate = viewModel.templateDateLiveData.value == null
@@ -138,44 +135,14 @@ class AddEditTransactionFragment : Fragment() {
                 accountId = accountId ?: 0
             )
 
-            (viewModel.editTransactionLiveData.value?.let {
+            val useAsTemplate = transaction_save_as_template_checkbox.isChecked
+            viewModel.editTransactionLiveData.value?.let {
                 viewModel.updateTransaction(transaction.apply {
                     id = viewModel.editTransactionLiveData.value?.transaction?.id
-                })
+                }, useAsTemplate)
             } ?: run {
-                viewModel.saveTransaction(transaction)
-            }).flatMap { transitionId ->
-                if (transaction_save_as_template_checkbox.isChecked) {
-                    viewModel.saveTransaction(
-                        transaction.apply {
-                            id = null
-                            isTemplate = true
-                        }
-                    )
-                } else {
-                    Single.just(-1L)
-                }
-            }.flatMap { transactionId ->
-                if (transactionId != -1L) {
-                    viewModel.saveTemplate(
-                        Template(
-                            usageCount = 1,
-                            transactionId = transactionId,
-                            categoryId = viewModel.categoryLiveData.value?.id ?: 0
-                        )
-                    )
-                } else {
-                    Single.just(-1L)
-                }
-            }.subscribe(
-                {
-                    context?.showToast(R.string.transaction_saved)
-                    findNavController().popBackStack(R.id.transactionListFragment, false)
-                },
-                {
-                    Snackbar.make(view, it.localizedMessage, Snackbar.LENGTH_SHORT).show()
-                }
-            )
+                viewModel.saveTransaction(transaction, useAsTemplate)
+            }
         }
 
         date_selector_input.setOnClickListener {
@@ -223,12 +190,32 @@ class AddEditTransactionFragment : Fragment() {
         viewModel.saveAsTemplateVisibilityLiveData.value = null
         viewModel.editTransactionLiveData.value = null
         viewModel.transactionTypeLiveData.value = null
+        viewModel.screenState.value = LoadingState()
         (activity as? OpenFullScreenListener)?.onScreenClose()
     }
 
     override fun onPause() {
         super.onPause()
         context?.hideKeyboard(view!!)
+    }
+
+    override fun provideViewModel(): AddEditTransactionViewModel {
+        (activity?.application  as? ApplicationComponentOwner)
+            ?.applicationComponent()
+            ?.plusTransactionAddEditComponent()
+            ?.inject(this)
+        return ViewModelProviders.of(activity!!, viewModelFactory).get(AddEditTransactionViewModel::class.java)
+    }
+
+    override fun onStateChange(state: State) {
+        when(state) {
+            is SavedState -> onSaved()
+        }
+    }
+
+    private fun onSaved() {
+        context?.showToast(R.string.transaction_saved)
+        findNavController().popBackStack(R.id.transactionListFragment, false)
     }
 
     companion object {
@@ -250,4 +237,6 @@ class AddEditTransactionFragment : Fragment() {
             putLong(CURRENT_ACCOUNT_ID, accountId)
         }
     }
+
+    class SavedState: State()
 }

@@ -1,32 +1,29 @@
 package com.jericho2code.app_finance_manager.model.repositories
 
 import android.arch.lifecycle.LiveData
+import androidx.annotation.WorkerThread
 import com.jericho2code.app_finance_manager.model.database.dao.TransactionDao
 import com.jericho2code.app_finance_manager.model.entity.Transaction
 import com.jericho2code.app_finance_manager.model.entity.TransactionWithCategory
-import io.reactivex.Scheduler
-import io.reactivex.Single
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class TransactionRepository @Inject constructor(
-    private val transactionDao: TransactionDao,
-    private val uiScheduler: Scheduler,
-    private val ioScheduler: Scheduler
-) {
+class TransactionRepository @Inject constructor(private val transactionDao: TransactionDao) {
 
     fun transactions(): LiveData<List<TransactionWithCategory>> = transactionDao.transactionsWithCategory()
 
     fun transactionForAccount(accountId: Long): LiveData<List<TransactionWithCategory>> =
         transactionDao.transactionsWithCategoryForAccount(accountId)
 
-    fun saveTransaction(transaction: Transaction): Single<Long> =
-        Single.fromCallable { transactionDao.insert(transaction) }
-            .subscribeOn(ioScheduler)
-            .observeOn(uiScheduler)
+    @WorkerThread
+    suspend fun saveTransaction(transaction: Transaction): Long = withContext(Dispatchers.IO) {
+        transactionDao.insert(transaction)
+    }
 
-    fun updateTransaction(transaction: Transaction): Single<Unit> =
-        Single.fromCallable { transactionDao.update(transaction) }
-            .subscribeOn(ioScheduler)
-            .observeOn(uiScheduler)
+    @WorkerThread
+    suspend fun updateTransaction(transaction: Transaction) = withContext(Dispatchers.IO) {
+        transactionDao.update(transaction)
+    }
 
 }

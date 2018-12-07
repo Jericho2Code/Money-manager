@@ -1,25 +1,24 @@
 package com.jericho2code.app_finance_manager.model.repositories
 
 import android.arch.lifecycle.LiveData
+import androidx.annotation.WorkerThread
 import com.jericho2code.app_finance_manager.model.database.dao.AccountDao
 import com.jericho2code.app_finance_manager.model.entity.Account
-import io.reactivex.Scheduler
-import io.reactivex.Single
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class AccountRepository @Inject constructor(
-    private val accountDao: AccountDao,
-    private val uiScheduler: Scheduler,
-    private val ioScheduler: Scheduler
-) {
+class AccountRepository @Inject constructor(private val accountDao: AccountDao) {
 
     fun accounts(): LiveData<List<Account>> = accountDao.accounts()
 
-    fun addAccount(account: Account) = Single.fromCallable { accountDao.insert(account) }
-        .subscribeOn(ioScheduler)
-        .observeOn(uiScheduler)
+    @WorkerThread
+    suspend fun addAccount(account: Account) = withContext(Dispatchers.IO) {
+        accountDao.insert(account)
+    }
 
-    fun updateAccount(account: Account) = Single.fromCallable { accountDao.update(account) }
-        .subscribeOn(ioScheduler)
-        .observeOn(uiScheduler)
+    @WorkerThread
+    suspend fun updateAccount(account: Account) = withContext(Dispatchers.IO) {
+        accountDao.update(account)
+    }
 }

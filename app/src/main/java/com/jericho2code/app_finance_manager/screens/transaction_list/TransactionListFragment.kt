@@ -14,15 +14,13 @@ import com.jericho2code.app_finance_manager.application.extensions.visible
 import com.jericho2code.app_finance_manager.model.entity.TransactionType
 import com.jericho2code.app_finance_manager.model.entity.TransactionWithCategory
 import com.jericho2code.app_finance_manager.screens.add_edit_transaction.AddEditTransactionFragment
-import com.jericho2code.app_finance_manager.utils.ScreenState
-import com.jericho2code.app_finance_manager.utils.StateFragment
+import com.jericho2code.app_finance_manager.utils.*
 import kotlinx.android.synthetic.main.fragment_transaction_list.*
 import kotlinx.android.synthetic.main.view_transaction_list_header.*
 import javax.inject.Inject
 
 
 class TransactionListFragment : StateFragment<TransactionListViewModel>() {
-
     @Inject
     lateinit var viewModelFactory: TransactionListViewModelFactory
 
@@ -41,30 +39,10 @@ class TransactionListFragment : StateFragment<TransactionListViewModel>() {
             account?.let {
                 viewModel.updateTransactions(it).observe(this, Observer { transactions ->
                     if (transactions.isNullOrEmpty()) {
-                        viewModel.setState(ScreenState.EMPTY)
+                        viewModel.setState(EmptyState())
                     } else {
-                        val listItems =
-                            transactions.sortedByDescending { it.transaction?.date }.groupBy { it.transaction?.date?.dayOfYear }
-                                .map { (_, transactions) ->
-                                    val transactionDayDelta = transactions.sumByDouble {
-                                        val digit =
-                                            if (it.transaction?.transactionType == TransactionType.SPENDING_TRANSACTION) -1 else 1
-                                        (it.transaction?.value ?: 0.0) * digit
-                                    }
-                                    val date = transactions.first().transaction?.date!!
-                                    val transactionType = transactions.first().transaction!!.transactionType
-                                    val sortedTransactions = transactions.map { TransactionRegularListItem(it) }
-                                    listOf(
-                                        TransactionHeaderListItem(
-                                            date,
-                                            transactionDayDelta,
-                                            transactionType
-                                        )
-                                    ) + sortedTransactions
-                                }.flatten()
-                        adapter.items = listItems
-                        initStatisticsCards(transactions)
-                        viewModel.setState(ScreenState.CONTENT)
+
+                        viewModel.setState(ContentState(transactions))
                     }
                 })
             }
@@ -121,20 +99,55 @@ class TransactionListFragment : StateFragment<TransactionListViewModel>() {
         return ViewModelProviders.of(this, viewModelFactory).get(TransactionListViewModel::class.java)
     }
 
-    override fun showLoading() {
+    override fun onStateChange(state: State) {
+        when (state) {
+            is LoadingState -> showLoading()
+            is EmptyState -> showEmpty()
+            is ContentState<*> -> {
+                val contentValue = (state as? ContentState<List<TransactionWithCategory>>)?.value
+                contentValue?.let {
+                    showContent(it)
+                }
+            }
+        }
+    }
+
+    private fun showLoading() {
         transaction_list_progress.visible()
         transition_list.gone()
         transaction_list_empty.gone()
     }
 
-    override fun showContent() {
+    private fun showContent(content: List<TransactionWithCategory>) {
+
+        val listItems = content.sortedByDescending { it.transaction?.date }
+            .groupBy { it.transaction?.date?.dayOfYear }
+            .map { (_, transactions) ->
+                val transactionDayDelta = transactions.sumByDouble {
+                    val digit =
+                        if (it.transaction?.transactionType == TransactionType.SPENDING_TRANSACTION) -1 else 1
+                    (it.transaction?.value ?: 0.0) * digit
+                }
+                val date = transactions.first().transaction?.date!!
+                val transactionType = transactions.first().transaction!!.transactionType
+                val sortedTransactions = transactions.map { TransactionRegularListItem(it) }
+                listOf(
+                    TransactionHeaderListItem(
+                        date,
+                        transactionDayDelta,
+                        transactionType
+                    )
+                ) + sortedTransactions
+            }.flatten()
+        adapter.items = listItems
+        initStatisticsCards(content)
+
         transition_list.visible()
         transaction_list_progress.gone()
         transaction_list_empty.gone()
     }
 
-    override fun showError() {}
-    override fun showEmpty() {
+    private fun showEmpty() {
         transition_list.visible()
         transaction_list_progress.gone()
         transaction_list_empty.visible()

@@ -1,25 +1,16 @@
 package com.jericho2code.app_finance_manager.screens.add_edit_category
 
 import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModel
 import com.jericho2code.app_finance_manager.model.entity.Category
 import com.jericho2code.app_finance_manager.model.repositories.CategoryRepository
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
+import com.jericho2code.app_finance_manager.utils.CorutineViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import kotlin.coroutines.CoroutineContext
 
-class AddEditCategoryViewModel : ViewModel() {
+class AddEditCategoryViewModel : CorutineViewModel() {
 
     @Inject
     lateinit var categoryRepository: CategoryRepository
-
-    private var parentJob = Job()
-    private val coroutineContext: CoroutineContext
-        get() = parentJob + Dispatchers.Main
-    private val scope = CoroutineScope(coroutineContext)
 
 
     var backgroundColorLiveData = MutableLiveData<Int>()
@@ -39,8 +30,5 @@ class AddEditCategoryViewModel : ViewModel() {
         }
     }
 
-    override fun onCleared() {
-        super.onCleared()
-        parentJob.cancel()
-    }
+
 }

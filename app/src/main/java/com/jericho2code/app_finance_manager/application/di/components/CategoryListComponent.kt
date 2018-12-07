@@ -14,6 +14,4 @@ import dagger.Subcomponent
 )
 interface CategoryListComponent {
     fun inject(viewModel: CategoryListViewModel)
-    fun inject(view: SelectCategoryFragment)
-
 }

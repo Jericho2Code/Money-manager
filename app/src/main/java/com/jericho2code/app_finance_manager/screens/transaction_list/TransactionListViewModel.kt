@@ -8,16 +8,12 @@ import com.jericho2code.app_finance_manager.model.repositories.TransactionReposi
 import com.jericho2code.app_finance_manager.utils.StateOwnerViewModel
 
 class TransactionListViewModel constructor(
-    val transactionRepository: TransactionRepository,
-    val accountRepository: AccountRepository
+    private val transactionRepository: TransactionRepository,
+    private val accountRepository: AccountRepository
 ) : StateOwnerViewModel() {
 
-    val accountsLiveData: LiveData<List<Account>>
+    val accountsLiveData: LiveData<List<Account>> = accountRepository.accounts()
     val currentAccountLiveData = MutableLiveData<Account>()
-
-    init {
-        accountsLiveData = accountRepository.accounts()
-    }
 
     fun setCurrentAccount(account: Account) {
         currentAccountLiveData.postValue(account)

@@ -4,8 +4,6 @@ import android.arch.lifecycle.LiveData
 import androidx.annotation.WorkerThread
 import com.jericho2code.app_finance_manager.model.database.dao.CategoryDao
 import com.jericho2code.app_finance_manager.model.entity.Category
-import io.reactivex.Scheduler
-import io.reactivex.Single
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
