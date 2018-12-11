@@ -2,7 +2,6 @@ package com.jericho2code.app_finance_manager.screens.add_edit_transaction
 
 import android.arch.lifecycle.MutableLiveData
 import com.jericho2code.app_finance_manager.model.entity.*
-import com.jericho2code.app_finance_manager.model.repositories.CategoryRepository
 import com.jericho2code.app_finance_manager.model.repositories.TemplateRepository
 import com.jericho2code.app_finance_manager.model.repositories.TransactionRepository
 import com.jericho2code.app_finance_manager.utils.LoadingState
@@ -56,12 +55,6 @@ class AddEditTransactionViewModel(
             categoryId = categoryLiveData.value?.id ?: 0
         )
         templateRepository.saveTemplate(template)
-    }
-
-    fun incrementTemplateUsageCount(template: Template) {
-        scope.launch {
-            templateRepository.updateTemplate(template.apply { usageCount += 1 })
-        }
     }
 
     fun setCategory(category: Category) {

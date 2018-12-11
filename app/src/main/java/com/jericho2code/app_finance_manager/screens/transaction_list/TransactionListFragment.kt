@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.jericho2code.app_finance_manager.R
 import com.jericho2code.app_finance_manager.application.di.owners.ApplicationComponentOwner
+import com.jericho2code.app_finance_manager.application.extensions.dp2px
 import com.jericho2code.app_finance_manager.application.extensions.gone
 import com.jericho2code.app_finance_manager.application.extensions.visible
 import com.jericho2code.app_finance_manager.model.entity.TransactionType
@@ -17,6 +18,9 @@ import com.jericho2code.app_finance_manager.screens.add_edit_transaction.AddEdit
 import com.jericho2code.app_finance_manager.utils.*
 import kotlinx.android.synthetic.main.fragment_transaction_list.*
 import kotlinx.android.synthetic.main.view_transaction_list_header.*
+import lecho.lib.hellocharts.model.Line
+import lecho.lib.hellocharts.model.LineChartData
+import lecho.lib.hellocharts.model.PointValue
 import javax.inject.Inject
 
 
@@ -64,6 +68,22 @@ class TransactionListFragment : StateFragment<TransactionListViewModel>() {
         val spent = transactions.filter { it.transaction?.transactionType == TransactionType.SPENDING_TRANSACTION }
             .sumBy { it.transaction?.value?.toInt() ?: 0 }
         val total = profit - spent
+
+        fun List<TransactionWithCategory>.toPoints(): List<PointValue> =
+            this.groupBy { it.transaction?.date?.dayOfYear }.map {
+                PointValue(
+                    it.key!!.toFloat(),
+                    it.value.sumByDouble {
+                        (it.transaction?.value
+                            ?: 0.0) * if (it.transaction?.transactionType == TransactionType.SPENDING_TRANSACTION) -1 else 1
+                    }.toFloat()
+                )
+            }
+
+        val points = transactions.toPoints().sortedBy { it.x }
+        val line = Line(points)
+        line.pointRadius = 1.dp2px()
+        chart.lineChartData = LineChartData(listOf(line))
 
         total_balance_value.text = "${if (total > 0) "+" else ""}$total \u20BD"
         total_profit_for_last_month_value.text = "+$profit \u20BD"
